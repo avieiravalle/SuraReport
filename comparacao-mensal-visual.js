@@ -648,72 +648,80 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Gráfico de Retrabalho (Rework)
+    // Gráfico de Retrabalho (Rework) - Volume e Tendência Combinados
     function updateReworkChart() {
         const canvas = document.getElementById('rework-chart');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         const months = getAvailableMonths();
 
-        let totalProd = 0;
-        let totalNonProd = 0;
+        const prodData = [];
+        const nonProdData = [];
 
-        if (months.length > 0) {
-            const lastMonth = months[months.length - 1];
-            const centerData = dadosRelatorio[lastMonth]?.[currentCenter];
+        months.forEach(month => {
+            const centerData = dadosRelatorio[month]?.[currentCenter];
+            let p = 0;
+            let np = 0;
             if (centerData) {
-                totalProd = getTotalProductionBugs(centerData);
-                
+                p = getTotalProductionBugs(centerData);
                 const nonProdBugs = getNonProductionBugsObject(centerData);
-                totalNonProd = (nonProdBugs.baixa + nonProdBugs.media + nonProdBugs.alta);
+                np = (nonProdBugs.baixa + nonProdBugs.media + nonProdBugs.alta);
             }
-        }
+            prodData.push(p);
+            nonProdData.push(np);
+        });
 
         if (reworkChart) {
-            reworkChart.data.datasets[0].data = [totalProd, totalNonProd];
+            reworkChart.data.labels = months.map(formatMonth);
+            reworkChart.data.datasets[0].data = nonProdData;
+            reworkChart.data.datasets[1].data = prodData;
             reworkChart.update();
             return;
         }
 
         reworkChart = new Chart(ctx, {
-            type: 'doughnut',
+            type: 'bar',
             data: {
-                labels: ['Bugs Produção', 'Bugs Não-Prod'],
-                datasets: [{
-                    data: [totalProd, totalNonProd],
-                    backgroundColor: [
-                        '#0033A0', // Sura Blue
-                        '#00A79D'  // Sura Green
-                    ],
-                    borderColor: [
-                        '#ffffff',
-                        '#ffffff'
-                    ],
-                    borderWidth: 3,
-                    hoverOffset: 4
-                }]
+                labels: months.map(formatMonth),
+                datasets: [
+                    {
+                        label: 'Bugs Não-Prod',
+                        data: nonProdData,
+                        backgroundColor: '#00A79D', // Sura Green
+                        borderRadius: 4,
+                        stack: 'stack0'
+                    },
+                    {
+                        label: 'Bugs Produção',
+                        data: prodData,
+                        backgroundColor: '#0033A0', // Sura Blue
+                        borderRadius: 4,
+                        stack: 'stack0'
+                    }
+                ]
             },
             options: {
+                layout: { padding: { top: 25 } },
                 responsive: true,
                 maintainAspectRatio: false,
-                cutout: '50%',
+                scales: {
+                    x: { stacked: true, grid: { display: false } },
+                    y: { 
+                        stacked: true, 
+                        beginAtZero: true,
+                        title: { display: true, text: 'Quantidade de Bugs', font: { weight: 'bold', size: 14 } },
+                        grid: { borderDash: [5, 5], color: 'rgba(0,0,0,0.05)' }
+                    }
+                },
                 plugins: {
-                    title: { display: true, text: 'Volume de Retrabalho (Último Mês)' },
+                    title: { display: true, text: 'Volume e Tendência de Retrabalho', font: { size: 18 } },
                     datalabels: {
                         color: '#fff',
-                        font: { weight: 'bold', size: 14 },
-                        formatter: (value, ctx) => {
-                            if (value === 0) return '';
-                            const dataArr = ctx.chart.data.datasets[0].data;
-                            const sum = dataArr.reduce((a, b) => a + b, 0);
-                            const percentage = (value * 100 / sum).toFixed(1) + "%";
-                            return `${value}\n(${percentage})`;
-                        },
-                        textAlign: 'center'
+                        font: { weight: 'bold', size: 12 },
+                        formatter: (value) => value > 0 ? value : ''
                     },
-                    legend: {
-                        position: 'bottom'
-                    }
+                    legend: { position: 'bottom' },
+                    tooltip: { mode: 'index', intersect: false }
                 }
             }
         });
