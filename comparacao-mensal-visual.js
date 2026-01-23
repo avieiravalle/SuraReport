@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Variáveis globais
     let currentCenter;
-    let codeCoverageChart, leadTimeChart, overallHealthChart, reworkChart, automatedTestsChart, testCasesPerUsChart, qaEfficiencyChart, spilloverChart, consolidatedBugsChart, consolidatedNonProdBugsChart;
+    let codeCoverageChart, leadTimeChart, overallHealthChart, reworkChart, automatedTestsChart, testCasesPerUsChart, spilloverChart, consolidatedBugsChart, consolidatedNonProdBugsChart;
     let currentSort = { column: null, direction: 'asc' };
     let currentTrendMetrics = [];
     
@@ -245,7 +245,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateLeadTimeChart();
         updateAutomatedTestsChart();
         updateTestCasesPerUsChart();
-        updateQaEfficiencyChart();
         updateSpilloverChart();
         updateConsolidatedBugsChart();
         updateNonProdBugsChart();
@@ -914,81 +913,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     legend: { 
                         display: true,
                         position: 'bottom'
-                    }
-                }
-            }
-        });
-    }
-
-    // Gráfico de Eficiência do QA
-    function updateQaEfficiencyChart() {
-        const canvas = document.getElementById('qa-efficiency-chart');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        const months = getAvailableMonths();
-
-        const escritaData = [];
-        const execucaoData = [];
-        const reexecucaoData = [];
-
-        months.forEach(month => {
-            const centerData = dadosRelatorio[month]?.[currentCenter];
-            let escrita = 0, execucao = 0, reexecucao = 0;
-
-            if (centerData) {
-                const s1 = centerData.sprint1?.eficiencia || { escrita: 0, execucao: 0, reexecucao: 0 };
-                const s2 = centerData.sprint2?.eficiencia || { escrita: 0, execucao: 0, reexecucao: 0 };
-                
-                escrita = (s1.escrita + s2.escrita) / 2;
-                execucao = (s1.execucao + s2.execucao) / 2;
-                reexecucao = (s1.reexecucao + s2.reexecucao) / 2;
-            }
-            escritaData.push(escrita);
-            execucaoData.push(execucao);
-            reexecucaoData.push(reexecucao);
-        });
-
-        if (qaEfficiencyChart) {
-            qaEfficiencyChart.data.labels = months.map(formatMonth);
-            qaEfficiencyChart.data.datasets[0].data = escritaData;
-            qaEfficiencyChart.data.datasets[1].data = execucaoData;
-            qaEfficiencyChart.data.datasets[2].data = reexecucaoData;
-            qaEfficiencyChart.update();
-            return;
-        }
-
-        const gradEscrita = ctx.createLinearGradient(0, 0, 0, 300);
-        gradEscrita.addColorStop(0, '#3498db'); gradEscrita.addColorStop(1, '#2980b9');
-
-        const gradExec = ctx.createLinearGradient(0, 0, 0, 300);
-        gradExec.addColorStop(0, '#2ecc71'); gradExec.addColorStop(1, '#27ae60');
-
-        const gradReexec = ctx.createLinearGradient(0, 0, 0, 300);
-        gradReexec.addColorStop(0, '#e67e22'); gradReexec.addColorStop(1, '#d35400');
-
-        qaEfficiencyChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: months.map(formatMonth),
-                datasets: [
-                    { label: 'Escrita (Meta: 7\')', data: escritaData, backgroundColor: gradEscrita, borderRadius: 4, barPercentage: 0.6 },
-                    { label: 'Execução (Meta: 7\')', data: execucaoData, backgroundColor: gradExec, borderRadius: 4, barPercentage: 0.6 },
-                    { label: 'Reexecução (Meta: 5\')', data: reexecucaoData, backgroundColor: gradReexec, borderRadius: 4, barPercentage: 0.6 }
-                ]
-            },
-            options: {
-                layout: { padding: { top: 25 } },
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { beginAtZero: true, title: { display: true, text: 'Minutos', font: { weight: 'bold', size: 14 } }, grid: { borderDash: [5, 5], color: 'rgba(0,0,0,0.05)' } },
-                    x: { grid: { display: false } }
-                },
-                plugins: {
-                    title: { display: true, text: 'Eficiência QA (Tempos Médios)', font: { size: 18 } },
-                    datalabels: {
-                        anchor: 'end', align: 'top', color: '#555', font: { weight: 'bold', size: 11 },
-                        formatter: (value) => value > 0 ? value.toFixed(1) : ''
                     }
                 }
             }

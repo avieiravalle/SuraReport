@@ -54,11 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('compare-btn').addEventListener('click', openComparisonReport);
     document.getElementById('save-pdf-btn').addEventListener('click', () => saveToPDF('download'));
     document.getElementById('email-pdf-btn').addEventListener('click', () => saveToPDF('email'));
-    document.getElementById('clear-action-plan-btn').addEventListener('click', clearActionPlan);
-    document.getElementById('generate-action-plan-btn').addEventListener('click', fillActionPlanWithSuggestions);
-
-    // Adicionar listener para o campo de plano de ação
-    document.getElementById('action-plan-textarea').addEventListener('input', saveActionPlan);
 
     // Carregar relatório inicial
     updateReport();
@@ -182,11 +177,6 @@ function updateReport() {
     updateExecucoesQA();
     updateBugsNaoProdutivos();
     updateBugsProdutivos();
-    updateSummary();
-    loadActionPlan();
-
-    // Garante que o plano de ação está habilitado se houver dados
-    document.getElementById('action-plan-textarea').disabled = false;
 }
 
 /**
@@ -194,14 +184,11 @@ function updateReport() {
  */
 function showDataError() {
     const errorMessageHTML = '<p style="color: var(--tertiary-color); text-align: center;">Dados não disponíveis para a seleção atual.</p>';
-    const contentIds = ['sprint1-content', 'sprint2-content', 'bugs-content', 'summary-grid'];
+    const contentIds = ['sprint1-content', 'sprint2-content', 'bugs-content'];
     contentIds.forEach(id => {
         const element = document.getElementById(id);
         if (element) element.innerHTML = errorMessageHTML;
     });
-    const actionPlanTextarea = document.getElementById('action-plan-textarea');
-    actionPlanTextarea.value = '';
-    actionPlanTextarea.disabled = true;
 }
 
 /**
@@ -529,14 +516,6 @@ function generateSprintHTML(sprintData, cumulativeScenarios = null, previousIds 
         createMetricRow('Economia de Tempo', economia, ' min', { value: 0, higherIsBetter: true, displayTarget: false })
     ]));
 
-    // Seção de Eficiência do QA
-    const eficienciaData = sprintData.eficiencia || { escrita: 0, execucao: 0, reexecucao: 0 };
-    fragment.appendChild(createTable('Eficiência do QA (Médias)', [
-        createMetricRow('Escrita de CTs', eficienciaData.escrita, ' min', METRIC_TARGETS.eficienciaQa.escrita),
-        createMetricRow('Execução de CTs', eficienciaData.execucao, ' min', METRIC_TARGETS.eficienciaQa.execucao),
-        createMetricRow('Reexecução de Bugs', eficienciaData.reexecucao, ' min', METRIC_TARGETS.eficienciaQa.reexecucao)
-    ]));
-
     return fragment;
 }
 
@@ -619,221 +598,6 @@ function calculateCumulativeScenarios(targetMonth, center, sprintTarget) {
         if (month === targetMonth && sprintTarget === 'sprint2') return total;
     }
     return total;
-}
-
-/**
- * Atualiza a seção de resumo geral dos centers.
- */
-function updateSummary() {
-    const summaryGrid = document.getElementById('summary-grid');
-    summaryGrid.innerHTML = '';
-    const fragment = document.createDocumentFragment();
-
-    const summaryMetricsConfig = [
-        { 
-            name: 'Cobertura de Código', unit: '%', 
-            getValue: (s1, s2) => {
-                return (getSprintAverageCodeCoverage(s1) + getSprintAverageCodeCoverage(s2)) / 2;
-            }, 
-            getStatus: (v) => {
-                const target = METRIC_TARGETS.coberturaCodigo.linhas.value;
-                return v >= target ? 'positive' : v >= (target - 10) ? 'neutral' : 'negative';
-            }
-        },
-        { name: 'Pass Rate', unit: '%', getValue: (s1, s2) => (s1.passRate + s2.passRate) / 2, getStatus: (v) => v >= METRIC_TARGETS.passRate.value ? 'positive' : v >= (METRIC_TARGETS.passRate.value - 5) ? 'neutral' : 'negative' },
-        { name: 'Cobertura de Testes', unit: '%', getValue: (s1, s2, centerData) => getMonthTestCoverage(centerData, METRIC_TARGETS.densidadeTestes.value), getStatus: (v) => v >= METRIC_TARGETS.coberturaTestesPercentual.value ? 'positive' : v >= (METRIC_TARGETS.coberturaTestesPercentual.value - 10) ? 'neutral' : 'negative' },
-        { 
-            name: 'Bugs (Não Prod.)', unit: '', 
-            getValue: (s1, s2) => getSprintTotalNonProdBugs(s1) + getSprintTotalNonProdBugs(s2), 
-            getStatus: (v) => {
-                const target = METRIC_TARGETS.bugsNaoProdutivos.total.value;
-                return v <= target ? 'positive' : v <= (target + 5) ? 'neutral' : 'negative';
-            }
-        },
-        { name: 'Bugs (Prod.)', unit: '', getValue: (s1, s2, centerData) => {
-            const bugs = getProductionBugsObject(centerData);
-            return bugs.baixa + bugs.media + bugs.alta;
-        }, getStatus: (v) => {
-            const target = METRIC_TARGETS.bugsProducao.total.value;
-            return v <= target ? 'positive' : v <= (target + 2) ? 'neutral' : 'negative';
-        } },
-        { name: 'Cycle Time Testes', unit: ' dias', getValue: (s1, s2, centerData) => getAverageSprintMetric(centerData, 'leadTimeTestes'), getStatus: (v) => v <= METRIC_TARGETS.leadTimeTestes.value ? 'positive' : v <= (METRIC_TARGETS.leadTimeTestes.value + 0.5) ? 'neutral' : 'negative' },
-    ];
-
-    const monthData = dadosRelatorio[appState.currentMonth];
-    const centerList = Object.keys(monthData);
-
-    // --- 2. Renderizar os cards ---
-    centerList.forEach(centerKey => {
-        const centerData = dadosRelatorio[appState.currentMonth][centerKey];
-        if (!centerData) return;
-
-        const { sprint1, sprint2 } = centerData;
-
-        const centerElement = document.createElement('div');
-        centerElement.className = 'product-summary';
-
-        // Adiciona a classe de destaque se o center for o selecionado
-        if (centerKey === appState.currentCenter) {
-            centerElement.classList.add('selected-center');
-        }
-
-        const title = document.createElement('h4');
-        title.textContent = centerKey;
-        centerElement.appendChild(title);
-
-        summaryMetricsConfig.forEach(metricConfig => {
-            const value = metricConfig.getValue(sprint1, sprint2, centerData);
-            const status = metricConfig.getStatus(value);
-
-            const metricDiv = document.createElement('div');
-            metricDiv.className = 'metric';
-
-            const nameSpan = document.createElement('span');
-            nameSpan.className = 'metric-name';
-            nameSpan.textContent = `${metricConfig.name}:`;
-
-            const valueSpan = document.createElement('span');
-            valueSpan.className = `metric-value ${status}`;
-            if (status === 'negative') {
-                valueSpan.style.fontWeight = 'bold';
-            }
-            const formattedValue = isFinite(value) ? (Number.isInteger(value) ? value : value.toFixed(1)) : '∞';
-            valueSpan.textContent = `${formattedValue}${metricConfig.unit}`;
-
-            metricDiv.appendChild(nameSpan);
-            metricDiv.appendChild(valueSpan);
-            centerElement.appendChild(metricDiv);
-        });
-
-        fragment.appendChild(centerElement);
-    });
-    summaryGrid.appendChild(fragment);
-}
-
-function getActionPlanKey() {
-    return `actionPlan-${appState.currentMonth}-${appState.currentCenter}`;
-}
-
-function loadActionPlan() {
-    const key = getActionPlanKey();
-    const savedPlan = localStorage.getItem(key);
-    
-    if (savedPlan) {
-        document.getElementById('action-plan-textarea').value = savedPlan;
-    } else {
-        document.getElementById('action-plan-textarea').value = generateMissedMetricsText();
-    }
-}
-
-function saveActionPlan() {
-    localStorage.setItem(getActionPlanKey(), this.value);
-}
-
-function clearActionPlan() {
-    const key = getActionPlanKey();
-    if (!localStorage.getItem(key)) {
-        showToast('O plano de ação já está vazio.', 'info');
-        return;
-    }
-
-    showModal({
-        title: 'Confirmar Limpeza',
-        message: 'Tem certeza que deseja limpar o plano de ação para este mês e center? Esta ação não pode ser desfeita.',
-        buttons: [
-            { text: 'Cancelar', className: 'secondary', callback: hideModal },
-            { text: 'Confirmar', className: 'primary', callback: () => {
-                localStorage.removeItem(key);
-                document.getElementById('action-plan-textarea').value = '';
-                hideModal();
-                showToast('Plano de ação limpo com sucesso.', 'success');
-            }}
-        ]
-    });
-}
-
-function fillActionPlanWithSuggestions() {
-    const textarea = document.getElementById('action-plan-textarea');
-    const currentText = textarea.value;
-    
-    if (currentText.trim() !== '') {
-        showModal({
-            title: 'Substituir Plano?',
-            message: 'Já existe texto no plano de ação. Deseja substituir pelo modelo de métricas não alcançadas?',
-            buttons: [
-                { text: 'Cancelar', className: 'secondary', callback: hideModal },
-                { text: 'Substituir', className: 'primary', callback: () => {
-                    textarea.value = generateMissedMetricsText();
-                    saveActionPlan.call(textarea);
-                    hideModal();
-                }}
-            ]
-        });
-    } else {
-        textarea.value = generateMissedMetricsText();
-        saveActionPlan.call(textarea);
-    }
-}
-
-function generateMissedMetricsText() {
-    const missed = identifyMissedMetrics();
-    if (missed.length === 0) return "Todas as metas foram atingidas! \n\nObservações:";
-    
-    return "Métricas não alcançadas:\n\n" + 
-           missed.map(m => `* ${m}\n  - Plano de Ação: `).join('\n\n') + 
-           "\n\nOutras observações:";
-}
-
-function identifyMissedMetrics() {
-    const centerData = dadosRelatorio[appState.currentMonth][appState.currentCenter];
-    if (!centerData) return [];
-    
-    const { sprint1, sprint2 } = centerData;
-    const missed = [];
-
-    const check = (label, value, targetConfig) => {
-        if (!targetConfig) return;
-        const isMet = targetConfig.higherIsBetter ? value >= targetConfig.value : value <= targetConfig.value;
-        if (!isMet) {
-            missed.push(`${label} (Atual: ${Number.isInteger(value) ? value : value.toFixed(1)}, Meta: ${targetConfig.value})`);
-        }
-    };
-
-    // Cobertura Código (Média)
-    ['linhas', 'classes', 'metodos', 'branches'].forEach(type => {
-        const val = (sprint1.coberturaCodigo[type] + sprint2.coberturaCodigo[type]) / 2;
-        check(`Cobertura de Código - ${type.charAt(0).toUpperCase() + type.slice(1)}`, val, METRIC_TARGETS.coberturaCodigo[type]);
-    });
-
-    check('Pass Rate', (sprint1.passRate + sprint2.passRate) / 2, METRIC_TARGETS.passRate);
-
-    const totalUS = (sprint1.usSprint || 0) + (sprint2.usSprint || 0);
-    const totalTC = (sprint1.casosTestePorUs || 0) + (sprint2.casosTestePorUs || 0);
-    const cobTestes = calculateTestCoverage(totalUS, totalTC, METRIC_TARGETS.densidadeTestes.value);
-    check('Cobertura de Testes', cobTestes, METRIC_TARGETS.coberturaTestesPercentual);
-
-    check('Cycle Time de Testes', getAverageSprintMetric(centerData, 'leadTimeTestes'), METRIC_TARGETS.leadTimeTestes);
-    check('Cycle Time de Bugs', getAverageSprintMetric(centerData, 'leadTimeBugs'), METRIC_TARGETS.leadTimeBugs);
-
-    // Validação de Bugs Não Produtivos (Total) - Usa meta dinâmica
-    const totalNonProdBugs = getSprintTotalNonProdBugs(sprint1) + getSprintTotalNonProdBugs(sprint2);
-    if (METRIC_TARGETS.bugsNaoProdutivos.total) {
-        check('Bugs Não Produtivos (Total)', totalNonProdBugs, METRIC_TARGETS.bugsNaoProdutivos.total);
-    }
-
-    const prodBugs = getProductionBugsObject(centerData);
-    
-    // Validação de Bugs de Produção (Total) - Usa meta dinâmica
-    const totalProdBugs = prodBugs.baixa + prodBugs.media + prodBugs.alta;
-    if (METRIC_TARGETS.bugsProducao.total) {
-        check('Bugs Produção (Total)', totalProdBugs, METRIC_TARGETS.bugsProducao.total);
-    }
-
-    ['baixa', 'media', 'alta'].forEach(type => {
-        check(`Bugs Produção (${type})`, prodBugs[type], METRIC_TARGETS.bugsProducao[type]);
-    });
-
-    return missed;
 }
 
 // --- Funções de Ações do Usuário ---

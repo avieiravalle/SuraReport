@@ -11,14 +11,7 @@ const dadosRelatorio = {
           "branches": 29
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 4,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 133.33,
-        "leadTimeTestes": 4,
-        "leadTimeBugs": 0,
         "usSprint": 2,
         "casosTestePorUs": 8,
         "testesAutomatizados": {
@@ -31,7 +24,6 @@ const dadosRelatorio = {
         "ctExecutados": 54,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
-        "leadTimeBugsProd": 0,
         "listaUserStories": [
           {
             "nome": "38080",
@@ -49,9 +41,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 20,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "sprint2": {
@@ -64,14 +56,7 @@ const dadosRelatorio = {
           "branches": 18
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 4,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 213.33,
-        "leadTimeTestes": 4,
-        "leadTimeBugs": 0,
         "usSprint": 5,
         "casosTestePorUs": 32,
         "testesAutomatizados": {
@@ -84,7 +69,6 @@ const dadosRelatorio = {
         "ctExecutados": 68,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
-        "leadTimeBugsProd": 0,
         "listaUserStories": [
           {
             "nome": "38386",
@@ -123,9 +107,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 20,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "bugsProducao": {
@@ -133,7 +117,15 @@ const dadosRelatorio = {
         "media": 0,
         "alta": 0
       },
-      "qaValor": 0
+      "qaValor": 0,
+      "bugsNaoProdutivos": {
+        "baixa": 8,
+        "media": 0,
+        "alta": 0
+      },
+      "leadTimeTestes": 4,
+      "leadTimeBugs": 0,
+      "leadTimeBugsProd": 0
     },
     "Claims": {
       "sprint1": {
@@ -146,14 +138,7 @@ const dadosRelatorio = {
           "branches": 18
         },
         "passRate": 91.67,
-        "bugsNaoProdutivos": {
-          "baixa": 1,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 386.67,
-        "leadTimeTestes": 1,
-        "leadTimeBugs": 2,
         "usSprint": 5,
         "casosTestePorUs": 58,
         "testesAutomatizados": {
@@ -164,7 +149,6 @@ const dadosRelatorio = {
         },
         "ctEscritos": 35,
         "ctExecutados": 51,
-        "leadTimeBugsProd": 0,
         "reexecucaoBugsNaoProd": 1,
         "reexecucaoBugsProd": 0,
         "listaUserStories": [
@@ -205,9 +189,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 25,
+          "execucao": 45,
+          "reexecucao": 30
         }
       },
       "sprint2": {
@@ -220,14 +204,7 @@ const dadosRelatorio = {
           "branches": 18
         },
         "passRate": 94.74,
-        "bugsNaoProdutivos": {
-          "baixa": 1,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 211.11,
-        "leadTimeTestes": 1,
-        "leadTimeBugs": 2,
         "usSprint": 3,
         "casosTestePorUs": 19,
         "testesAutomatizados": {
@@ -238,7 +215,6 @@ const dadosRelatorio = {
         },
         "ctEscritos": 19,
         "ctExecutados": 49,
-        "leadTimeBugsProd": 0,
         "reexecucaoBugsNaoProd": 1,
         "reexecucaoBugsProd": 0,
         "listaUserStories": [
@@ -265,9 +241,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 25,
+          "execucao": 45,
+          "reexecucao": 30
         }
       },
       "bugsProducao": {
@@ -275,7 +251,15 @@ const dadosRelatorio = {
         "media": 1,
         "alta": 0
       },
-      "qaValor": 26000
+      "qaValor": 26000,
+      "bugsNaoProdutivos": {
+        "baixa": 2,
+        "media": 0,
+        "alta": 0
+      },
+      "leadTimeTestes": 1,
+      "leadTimeBugs": 2,
+      "leadTimeBugsProd": 0
     },
     "Billing": {
       "sprint1": {
@@ -288,14 +272,7 @@ const dadosRelatorio = {
           "branches": 18
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 2,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 75,
-        "leadTimeTestes": 2,
-        "leadTimeBugs": 5,
         "usSprint": 4,
         "casosTestePorUs": 9,
         "testesAutomatizados": {
@@ -306,7 +283,6 @@ const dadosRelatorio = {
         },
         "ctEscritos": 10,
         "ctExecutados": 38,
-        "leadTimeBugsProd": 0,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
         "listaUserStories": [
@@ -340,9 +316,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "sprint2": {
@@ -355,14 +331,7 @@ const dadosRelatorio = {
           "branches": 18
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 2,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 80,
-        "leadTimeTestes": 2,
-        "leadTimeBugs": 5,
         "usSprint": 5,
         "casosTestePorUs": 12,
         "testesAutomatizados": {
@@ -373,7 +342,6 @@ const dadosRelatorio = {
         },
         "ctEscritos": 12,
         "ctExecutados": 36,
-        "leadTimeBugsProd": 0,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
         "listaUserStories": [
@@ -414,9 +382,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "bugsProducao": {
@@ -424,7 +392,15 @@ const dadosRelatorio = {
         "media": 0,
         "alta": 0
       },
-      "qaValor": 10000
+      "qaValor": 10000,
+      "bugsNaoProdutivos": {
+        "baixa": 4,
+        "media": 0,
+        "alta": 0
+      },
+      "leadTimeTestes": 2,
+      "leadTimeBugs": 5,
+      "leadTimeBugsProd": 0
     },
     "Portal": {
       "sprint1": {
@@ -437,14 +413,7 @@ const dadosRelatorio = {
           "branches": 0
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 3,
-          "media": 4,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 141.67,
-        "leadTimeTestes": 1,
-        "leadTimeBugs": 6,
         "usSprint": 4,
         "casosTestePorUs": 17,
         "testesAutomatizados": {
@@ -455,7 +424,6 @@ const dadosRelatorio = {
         },
         "ctEscritos": 17,
         "ctExecutados": 21,
-        "leadTimeBugsProd": 32,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
         "listaUserStories": [
@@ -489,9 +457,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 60,
+          "reexecucao": 30
         }
       },
       "sprint2": {
@@ -504,14 +472,7 @@ const dadosRelatorio = {
           "branches": 0
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 3,
-          "media": 4,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 116.67,
-        "leadTimeTestes": 1,
-        "leadTimeBugs": 6,
         "usSprint": 2,
         "casosTestePorUs": 7,
         "testesAutomatizados": {
@@ -522,7 +483,6 @@ const dadosRelatorio = {
         },
         "ctEscritos": 7,
         "ctExecutados": 27,
-        "leadTimeBugsProd": 32,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
         "listaUserStories": [
@@ -542,9 +502,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 60,
+          "reexecucao": 30
         }
       },
       "bugsProducao": {
@@ -552,7 +512,15 @@ const dadosRelatorio = {
         "media": 3,
         "alta": 0
       },
-      "qaValor": 26000
+      "qaValor": 26000,
+      "bugsNaoProdutivos": {
+        "baixa": 6,
+        "media": 8,
+        "alta": 0
+      },
+      "leadTimeTestes": 1,
+      "leadTimeBugs": 6,
+      "leadTimeBugsProd": 32
     },
     "Integracoes": {
       "sprint1": {
@@ -565,24 +533,17 @@ const dadosRelatorio = {
           "branches": 0
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 1,
-          "media": 2,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 55.56,
-        "leadTimeTestes": 4,
-        "leadTimeBugs": 0,
         "usSprint": 3,
         "casosTestePorUs": 5,
         "testesAutomatizados": {
           "cenarios": 0,
           "tempoManual": 0,
-          "tempoAutom": 0
+          "tempoAutom": 0,
+          "execucoes": 0
         },
         "ctEscritos": 5,
         "ctExecutados": 5,
-        "leadTimeBugsProd": 4,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
         "listaUserStories": [
@@ -609,9 +570,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 10,
+          "execucao": 20,
+          "reexecucao": 20
         }
       },
       "sprint2": {
@@ -624,24 +585,17 @@ const dadosRelatorio = {
           "branches": 0
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 0,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 100,
-        "leadTimeTestes": 4,
-        "leadTimeBugs": 0,
         "usSprint": 6,
         "casosTestePorUs": 18,
         "testesAutomatizados": {
           "cenarios": 0,
           "tempoManual": 0,
-          "tempoAutom": 0
+          "tempoAutom": 0,
+          "execucoes": 0
         },
         "ctEscritos": 18,
         "ctExecutados": 18,
-        "leadTimeBugsProd": 4,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
         "listaUserStories": [
@@ -689,9 +643,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 10,
+          "execucao": 20,
+          "reexecucao": 20
         }
       },
       "bugsProducao": {
@@ -699,7 +653,15 @@ const dadosRelatorio = {
         "media": 2,
         "alta": 0
       },
-      "qaValor": 26000
+      "qaValor": 26000,
+      "bugsNaoProdutivos": {
+        "baixa": 1,
+        "media": 2,
+        "alta": 0
+      },
+      "leadTimeTestes": 4,
+      "leadTimeBugs": 0,
+      "leadTimeBugsProd": 4
     }
   },
   "2025-12": {
@@ -714,14 +676,7 @@ const dadosRelatorio = {
           "branches": 15
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 2,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 255.56,
-        "leadTimeTestes": 4,
-        "leadTimeBugs": 1,
         "usSprint": 6,
         "casosTestePorUs": 46,
         "testesAutomatizados": {
@@ -734,7 +689,6 @@ const dadosRelatorio = {
         "ctExecutados": 44,
         "reexecucaoBugsNaoProd": 2,
         "reexecucaoBugsProd": 1,
-        "leadTimeBugsProd": 0,
         "listaUserStories": [
           {
             "nome": "38280",
@@ -780,9 +734,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 15,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "sprint2": {
@@ -795,14 +749,7 @@ const dadosRelatorio = {
           "branches": 24
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 1,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 200,
-        "leadTimeTestes": 3,
-        "leadTimeBugs": 0,
         "usSprint": 3,
         "casosTestePorUs": 18,
         "testesAutomatizados": {
@@ -815,7 +762,6 @@ const dadosRelatorio = {
         "ctExecutados": 0,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
-        "leadTimeBugsProd": 0,
         "listaUserStories": [
           {
             "nome": "37735",
@@ -840,9 +786,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 20,
+          "execucao": 35,
+          "reexecucao": 30
         }
       },
       "bugsProducao": {
@@ -850,7 +796,15 @@ const dadosRelatorio = {
         "media": 1,
         "alta": 0
       },
-      "qaValor": 0
+      "qaValor": 0,
+      "bugsNaoProdutivos": {
+        "baixa": 3,
+        "media": 0,
+        "alta": 0
+      },
+      "leadTimeTestes": 3.5,
+      "leadTimeBugs": 1,
+      "leadTimeBugsProd": 0
     },
     "Claims": {
       "sprint1": {
@@ -863,14 +817,7 @@ const dadosRelatorio = {
           "branches": 22
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 1,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 211.11,
-        "leadTimeTestes": 1,
-        "leadTimeBugs": 2,
         "usSprint": 3,
         "casosTestePorUs": 19,
         "testesAutomatizados": {
@@ -883,7 +830,6 @@ const dadosRelatorio = {
         "ctExecutados": 48,
         "reexecucaoBugsNaoProd": 1,
         "reexecucaoBugsProd": 0,
-        "leadTimeBugsProd": 0,
         "listaUserStories": [
           {
             "nome": "38141",
@@ -908,9 +854,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 25,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "sprint2": {
@@ -923,14 +869,7 @@ const dadosRelatorio = {
           "branches": 30
         },
         "passRate": 91.67,
-        "bugsNaoProdutivos": {
-          "baixa": 0,
-          "media": 2,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 300,
-        "leadTimeTestes": 3,
-        "leadTimeBugs": 6,
         "usSprint": 4,
         "casosTestePorUs": 36,
         "testesAutomatizados": {
@@ -943,7 +882,6 @@ const dadosRelatorio = {
         "ctExecutados": 0,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
-        "leadTimeBugsProd": 0,
         "listaUserStories": [
           {
             "nome": "38472",
@@ -975,9 +913,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 25,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "bugsProducao": {
@@ -985,7 +923,15 @@ const dadosRelatorio = {
         "media": 1,
         "alta": 0
       },
-      "qaValor": 0
+      "qaValor": 0,
+      "bugsNaoProdutivos": {
+        "baixa": 1,
+        "media": 2,
+        "alta": 0
+      },
+      "leadTimeTestes": 2,
+      "leadTimeBugs": 4,
+      "leadTimeBugsProd": 0
     },
     "Billing": {
       "sprint1": {
@@ -998,14 +944,7 @@ const dadosRelatorio = {
           "branches": 30
         },
         "passRate": 85.71,
-        "bugsNaoProdutivos": {
-          "baixa": 2,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 133.33,
-        "leadTimeTestes": 2,
-        "leadTimeBugs": 5,
         "usSprint": 5,
         "casosTestePorUs": 20,
         "testesAutomatizados": {
@@ -1018,7 +957,6 @@ const dadosRelatorio = {
         "ctExecutados": 42,
         "reexecucaoBugsNaoProd": 2,
         "reexecucaoBugsProd": 0,
-        "leadTimeBugsProd": 0,
         "listaUserStories": [
           {
             "nome": "37816",
@@ -1057,9 +995,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "sprint2": {
@@ -1072,14 +1010,7 @@ const dadosRelatorio = {
           "branches": 32
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 0,
-          "media": 1,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 100,
-        "leadTimeTestes": 2,
-        "leadTimeBugs": 3,
         "usSprint": 3,
         "casosTestePorUs": 9,
         "testesAutomatizados": {
@@ -1092,7 +1023,6 @@ const dadosRelatorio = {
         "ctExecutados": 0,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
-        "leadTimeBugsProd": 14,
         "listaUserStories": [
           {
             "nome": "39458",
@@ -1117,9 +1047,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "bugsProducao": {
@@ -1127,7 +1057,15 @@ const dadosRelatorio = {
         "media": 1,
         "alta": 0
       },
-      "qaValor": 10000
+      "qaValor": 10000,
+      "bugsNaoProdutivos": {
+        "baixa": 2,
+        "media": 1,
+        "alta": 0
+      },
+      "leadTimeTestes": 2,
+      "leadTimeBugs": 4,
+      "leadTimeBugsProd": 14
     },
     "Portal": {
       "sprint1": {
@@ -1140,14 +1078,7 @@ const dadosRelatorio = {
           "branches": 0
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 1,
-          "media": 1,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 116.67,
-        "leadTimeTestes": 1,
-        "leadTimeBugs": 6,
         "usSprint": 2,
         "casosTestePorUs": 7,
         "testesAutomatizados": {
@@ -1160,7 +1091,6 @@ const dadosRelatorio = {
         "ctExecutados": 26,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
-        "leadTimeBugsProd": 32,
         "listaUserStories": [
           {
             "nome": "38295",
@@ -1178,9 +1108,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 60,
+          "reexecucao": 40
         }
       },
       "sprint2": {
@@ -1193,14 +1123,7 @@ const dadosRelatorio = {
           "branches": 0
         },
         "passRate": 83.33,
-        "bugsNaoProdutivos": {
-          "baixa": 3,
-          "media": 4,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 66.67,
-        "leadTimeTestes": 1,
-        "leadTimeBugs": 6,
         "usSprint": 3,
         "casosTestePorUs": 6,
         "testesAutomatizados": {
@@ -1213,7 +1136,6 @@ const dadosRelatorio = {
         "ctExecutados": 0,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
-        "leadTimeBugsProd": 32,
         "listaUserStories": [
           {
             "nome": "38111",
@@ -1238,9 +1160,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 60,
+          "reexecucao": 40
         }
       },
       "bugsProducao": {
@@ -1248,7 +1170,15 @@ const dadosRelatorio = {
         "media": 3,
         "alta": 0
       },
-      "qaValor": 26000
+      "qaValor": 26000,
+      "bugsNaoProdutivos": {
+        "baixa": 4,
+        "media": 5,
+        "alta": 0
+      },
+      "leadTimeTestes": 1,
+      "leadTimeBugs": 6,
+      "leadTimeBugsProd": 32
     },
     "Integracoes": {
       "sprint1": {
@@ -1261,15 +1191,7 @@ const dadosRelatorio = {
           "branches": 0
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 0,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 52.38,
-        "leadTimeTestes": 0,
-        "leadTimeBugs": 2,
-        "leadTimeBugsProd": 0,
         "usSprint": 7,
         "casosTestePorUs": 11,
         "testesAutomatizados": {
@@ -1334,9 +1256,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 10,
+          "execucao": 20,
+          "reexecucao": 20
         }
       },
       "sprint2": {
@@ -1349,15 +1271,7 @@ const dadosRelatorio = {
           "branches": 0
         },
         "passRate": 100,
-        "bugsNaoProdutivos": {
-          "baixa": 0,
-          "media": 0,
-          "alta": 0
-        },
         "coberturaTestesPercentual": 33.33,
-        "leadTimeTestes": 0,
-        "leadTimeBugs": 0,
-        "leadTimeBugsProd": 0,
         "usSprint": 2,
         "casosTestePorUs": 2,
         "testesAutomatizados": {
@@ -1387,9 +1301,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 10,
+          "execucao": 20,
+          "reexecucao": 20
         }
       },
       "bugsProducao": {
@@ -1397,7 +1311,15 @@ const dadosRelatorio = {
         "media": 2,
         "alta": 0
       },
-      "qaValor": 26000
+      "qaValor": 26000,
+      "bugsNaoProdutivos": {
+        "baixa": 0,
+        "media": 0,
+        "alta": 0
+      },
+      "leadTimeTestes": 0,
+      "leadTimeBugs": 2,
+      "leadTimeBugsProd": 0
     }
   },
   "metas": {
@@ -1411,7 +1333,7 @@ const dadosRelatorio = {
     "passRate": 90,
     "densidadeTestes": 4,
     "coberturaTestesPercentual": 100,
-    "leadTimeTestes": 2.5,
+    "leadTimeTestes": 1,
     "leadTimeBugs": 2,
     "leadTimeBugsProd": 2,
     "bugsNaoProdutivos": {
@@ -1421,20 +1343,20 @@ const dadosRelatorio = {
       "total": 10
     },
     "bugsProducao": {
-      "baixa": 5,
-      "media": 2,
+      "baixa": 3,
+      "media": 1,
       "alta": 0,
       "total": 2
     },
     "eficienciaQa": {
-      "escrita": 7,
-      "execucao": 7,
-      "reexecucao": 5
+      "escrita": 20,
+      "execucao": 30,
+      "reexecucao": 25
     },
     "automacao": {
       "cenariosNovos": 5,
       "tipoExecucao": "Smoke",
-      "execucoes": 0,
+      "execucoes": 1,
       "tempoManual": 240
     },
     "healthScore": {
@@ -1452,10 +1374,10 @@ const dadosRelatorio = {
         "numero": "01",
         "nome": "Release 1.6",
         "coberturaCodigo": {
-          "linhas": 0,
-          "classes": 0,
-          "metodos": 0,
-          "branches": 0
+          "linhas": 59,
+          "classes": 62,
+          "metodos": 53,
+          "branches": 25
         },
         "passRate": 100,
         "coberturaTestesPercentual": 255.56,
@@ -1465,11 +1387,11 @@ const dadosRelatorio = {
           "cenarios": 0,
           "tempoManual": 360,
           "tempoAutom": 25,
-          "execucoes": 0
+          "execucoes": 1
         },
         "ctEscritos": 46,
         "ctExecutados": 44,
-        "reexecucaoBugsNaoProd": 2,
+        "reexecucaoBugsNaoProd": 3,
         "reexecucaoBugsProd": 1,
         "listaUserStories": [
           {
@@ -1495,24 +1417,24 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 20,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "sprint2": {
         "numero": "02",
         "nome": "Release 1.7",
         "coberturaCodigo": {
-          "linhas": 0,
-          "classes": 0,
-          "metodos": 0,
-          "branches": 0
+          "linhas": 52,
+          "classes": 59,
+          "metodos": 58,
+          "branches": 25
         },
-        "passRate": 0,
+        "passRate": 100,
         "coberturaTestesPercentual": 200,
-        "usSprint": 0,
-        "casosTestePorUs": 0,
+        "usSprint": 2,
+        "casosTestePorUs": 15,
         "testesAutomatizados": {
           "cenarios": 0,
           "tempoManual": 360,
@@ -1521,23 +1443,38 @@ const dadosRelatorio = {
         },
         "ctEscritos": 0,
         "ctExecutados": 0,
-        "reexecucaoBugsNaoProd": 0,
-        "reexecucaoBugsProd": 0,
-        "listaUserStories": [],
+        "reexecucaoBugsNaoProd": 2,
+        "reexecucaoBugsProd": 1,
+        "listaUserStories": [
+          {
+            "nome": "38895",
+            "cts": 5,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "39767",
+            "cts": 10,
+            "executed": 10,
+            "passed": 10,
+            "failed": 0
+          }
+        ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 20,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "bugsProducao": {
         "baixa": 0,
-        "media": 3,
+        "media": 2,
         "alta": 0
       },
       "qaValor": 0,
       "bugsNaoProdutivos": {
-        "baixa": 2,
+        "baixa": 5,
         "media": 0,
         "alta": 0
       },
@@ -1550,15 +1487,15 @@ const dadosRelatorio = {
         "numero": "01",
         "nome": "Release 1.6",
         "coberturaCodigo": {
-          "linhas": 0,
-          "classes": 0,
-          "metodos": 0,
-          "branches": 0
+          "linhas": 38,
+          "classes": 60,
+          "metodos": 55,
+          "branches": 35
         },
-        "passRate": 0,
+        "passRate": 83.33,
         "coberturaTestesPercentual": 211.11,
-        "usSprint": 0,
-        "casosTestePorUs": 0,
+        "usSprint": 6,
+        "casosTestePorUs": 68,
         "testesAutomatizados": {
           "cenarios": 0,
           "tempoManual": 0,
@@ -1569,26 +1506,69 @@ const dadosRelatorio = {
         "ctExecutados": 48,
         "reexecucaoBugsNaoProd": 1,
         "reexecucaoBugsProd": 0,
-        "listaUserStories": [],
+        "listaUserStories": [
+          {
+            "nome": "39883",
+            "cts": 4,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "39896",
+            "cts": 5,
+            "executed": 5,
+            "passed": 5,
+            "failed": 0
+          },
+          {
+            "nome": "38132",
+            "cts": 6,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "38131",
+            "cts": 6,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "38322",
+            "cts": 9,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "31975",
+            "cts": 38,
+            "executed": 1,
+            "passed": 0,
+            "failed": 1
+          }
+        ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 20,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "sprint2": {
         "numero": "02",
         "nome": "Release 1.7",
         "coberturaCodigo": {
-          "linhas": 0,
-          "classes": 0,
-          "metodos": 0,
-          "branches": 0
+          "linhas": 52,
+          "classes": 59,
+          "metodos": 58,
+          "branches": 25
         },
-        "passRate": 0,
+        "passRate": 95.83,
         "coberturaTestesPercentual": 300,
-        "usSprint": 0,
-        "casosTestePorUs": 0,
+        "usSprint": 2,
+        "casosTestePorUs": 42,
         "testesAutomatizados": {
           "cenarios": 0,
           "tempoManual": 0,
@@ -1599,22 +1579,37 @@ const dadosRelatorio = {
         "ctExecutados": 0,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
-        "listaUserStories": [],
+        "listaUserStories": [
+          {
+            "nome": "39883",
+            "cts": 4,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "31975",
+            "cts": 38,
+            "executed": 24,
+            "passed": 23,
+            "failed": 1
+          }
+        ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 20,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "bugsProducao": {
-        "baixa": 0,
-        "media": 2,
-        "alta": 0
+        "baixa": 1,
+        "media": 0,
+        "alta": 1
       },
       "qaValor": 0,
       "bugsNaoProdutivos": {
         "baixa": 1,
-        "media": 1,
+        "media": 0,
         "alta": 0
       },
       "leadTimeTestes": 3,
@@ -1626,10 +1621,10 @@ const dadosRelatorio = {
         "numero": "01",
         "nome": "Release 1.6",
         "coberturaCodigo": {
-          "linhas": 0,
-          "classes": 0,
-          "metodos": 0,
-          "branches": 0
+          "linhas": 58,
+          "classes": 60,
+          "metodos": 55,
+          "branches": 35
         },
         "passRate": 0,
         "coberturaTestesPercentual": 133.33,
@@ -1647,24 +1642,24 @@ const dadosRelatorio = {
         "reexecucaoBugsProd": 0,
         "listaUserStories": [],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "sprint2": {
         "numero": "02",
         "nome": "Release 1.7 ",
         "coberturaCodigo": {
-          "linhas": 0,
-          "classes": 0,
-          "metodos": 0,
-          "branches": 0
+          "linhas": 38,
+          "classes": 56,
+          "metodos": 50,
+          "branches": 26
         },
-        "passRate": 0,
+        "passRate": 100,
         "coberturaTestesPercentual": 100,
-        "usSprint": 0,
-        "casosTestePorUs": 0,
+        "usSprint": 3,
+        "casosTestePorUs": 9,
         "testesAutomatizados": {
           "cenarios": 0,
           "tempoManual": 0,
@@ -1675,16 +1670,38 @@ const dadosRelatorio = {
         "ctExecutados": 0,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
-        "listaUserStories": [],
+        "listaUserStories": [
+          {
+            "nome": "41196",
+            "cts": 1,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "38861",
+            "cts": 4,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "39773",
+            "cts": 4,
+            "executed": 1,
+            "passed": 1,
+            "failed": 0
+          }
+        ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 40,
+          "reexecucao": 30
         }
       },
       "bugsProducao": {
         "baixa": 0,
-        "media": 1,
+        "media": 3,
         "alta": 0
       },
       "qaValor": 10000,
@@ -1712,10 +1729,10 @@ const dadosRelatorio = {
         "usSprint": 4,
         "casosTestePorUs": 13,
         "testesAutomatizados": {
-          "cenarios": 0,
+          "cenarios": 12,
           "tempoManual": 300,
           "tempoAutom": 15,
-          "execucoes": 0
+          "execucoes": 1
         },
         "ctEscritos": 7,
         "ctExecutados": 26,
@@ -1752,9 +1769,9 @@ const dadosRelatorio = {
           }
         ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 60,
+          "reexecucao": 40
         }
       },
       "sprint2": {
@@ -1766,36 +1783,58 @@ const dadosRelatorio = {
           "metodos": 0,
           "branches": 0
         },
-        "passRate": 0,
+        "passRate": 100,
         "coberturaTestesPercentual": 66.67,
-        "usSprint": 0,
-        "casosTestePorUs": 0,
+        "usSprint": 3,
+        "casosTestePorUs": 5,
         "testesAutomatizados": {
           "cenarios": 0,
           "tempoManual": 300,
           "tempoAutom": 15,
-          "execucoes": 0
+          "execucoes": 1
         },
         "ctEscritos": 0,
         "ctExecutados": 0,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
-        "listaUserStories": [],
+        "listaUserStories": [
+          {
+            "nome": "37806",
+            "cts": 0,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "40280",
+            "cts": 0,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "40936",
+            "cts": 5,
+            "executed": 3,
+            "passed": 3,
+            "failed": 0
+          }
+        ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 30,
+          "execucao": 60,
+          "reexecucao": 40
         }
       },
       "bugsProducao": {
-        "baixa": 2,
-        "media": 2,
+        "baixa": 4,
+        "media": 3,
         "alta": 0
       },
       "qaValor": 26000,
       "bugsNaoProdutivos": {
         "baixa": 3,
-        "media": 5,
+        "media": 4,
         "alta": 0
       },
       "leadTimeTestes": 12,
@@ -1812,10 +1851,10 @@ const dadosRelatorio = {
           "metodos": 0,
           "branches": 0
         },
-        "passRate": 0,
+        "passRate": 100,
         "coberturaTestesPercentual": 52.38,
-        "usSprint": 0,
-        "casosTestePorUs": 0,
+        "usSprint": 3,
+        "casosTestePorUs": 3,
         "testesAutomatizados": {
           "cenarios": 0,
           "tempoManual": 0,
@@ -1826,11 +1865,33 @@ const dadosRelatorio = {
         "ctExecutados": 6,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 2,
-        "listaUserStories": [],
+        "listaUserStories": [
+          {
+            "nome": "26685",
+            "cts": 1,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "40325",
+            "cts": 1,
+            "executed": 1,
+            "passed": 1,
+            "failed": 0
+          },
+          {
+            "nome": "40294",
+            "cts": 1,
+            "executed": 1,
+            "passed": 1,
+            "failed": 0
+          }
+        ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 10,
+          "execucao": 20,
+          "reexecucao": 20
         }
       },
       "sprint2": {
@@ -1842,10 +1903,10 @@ const dadosRelatorio = {
           "metodos": 0,
           "branches": 0
         },
-        "passRate": 0,
+        "passRate": 100,
         "coberturaTestesPercentual": 33.33,
-        "usSprint": 0,
-        "casosTestePorUs": 0,
+        "usSprint": 3,
+        "casosTestePorUs": 4,
         "testesAutomatizados": {
           "cenarios": 0,
           "tempoManual": 0,
@@ -1856,11 +1917,33 @@ const dadosRelatorio = {
         "ctExecutados": 0,
         "reexecucaoBugsNaoProd": 0,
         "reexecucaoBugsProd": 0,
-        "listaUserStories": [],
+        "listaUserStories": [
+          {
+            "nome": "40965",
+            "cts": 1,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "40966",
+            "cts": 1,
+            "executed": 0,
+            "passed": 0,
+            "failed": 0
+          },
+          {
+            "nome": "40602",
+            "cts": 2,
+            "executed": 2,
+            "passed": 2,
+            "failed": 0
+          }
+        ],
         "eficiencia": {
-          "escrita": 0,
-          "execucao": 0,
-          "reexecucao": 0
+          "escrita": 10,
+          "execucao": 20,
+          "reexecucao": 20
         }
       },
       "bugsProducao": {
@@ -1870,9 +1953,9 @@ const dadosRelatorio = {
       },
       "qaValor": 26000,
       "bugsNaoProdutivos": {
-        "baixa": 4,
-        "media": 2,
-        "alta": 0
+        "baixa": 2,
+        "media": 4,
+        "alta": 1
       },
       "leadTimeTestes": 5,
       "leadTimeBugs": 0,

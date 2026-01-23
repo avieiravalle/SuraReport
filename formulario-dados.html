@@ -435,9 +435,6 @@
                     // Inicialização da lista de User Stories (Nova Funcionalidade)
                     if (!productData[sprintKey].listaUserStories) productData[sprintKey].listaUserStories = [];
                     
-                    // Inicialização da Eficiência QA
-                    if (!productData[sprintKey].eficiencia) productData[sprintKey].eficiencia = { escrita: 0, execucao: 0, reexecucao: 0 };
-
                     // Limpeza de legado caso ainda exista
                     if (productData[sprintKey].bugsProducao) delete productData[sprintKey].bugsProducao;
                 });
@@ -598,14 +595,6 @@
                             <div class="sub-group" style="grid-template-columns: repeat(2, 1fr);">
                                 ${generateInput(sprintKey, 'reexecucaoBugsNaoProd', data.reexecucaoBugsNaoProd || 0, 'Reexec. Não-Prod')}
                                 ${generateInput(sprintKey, 'reexecucaoBugsProd', data.reexecucaoBugsProd || 0, 'Reexec. Prod')}
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label>Eficiência do QA (Tempos Médios)</label>
-                            <div class="sub-group" style="grid-template-columns: repeat(3, 1fr);">
-                                ${generateInput(sprintKey, 'eficiencia.escrita', data.eficiencia ? data.eficiencia.escrita : 0, 'Escrita (min)')}
-                                ${generateInput(sprintKey, 'eficiencia.execucao', data.eficiencia ? data.eficiencia.execucao : 0, 'Execução (min)')}
-                                ${generateInput(sprintKey, 'eficiencia.reexecucao', data.eficiencia ? data.eficiencia.reexecucao : 0, 'Reexecução (min)')}
                             </div>
                         </div>
                     </div>
@@ -865,7 +854,6 @@
                 leadTimeBugsProd: 2.0,
                 bugsNaoProdutivos: { baixa: 5, media: 3, alta: 1, total: 10 },
                 bugsProducao: { baixa: 5, media: 2, alta: 0, total: 2 },
-                eficienciaQa: { escrita: 7, execucao: 7, reexecucao: 5 },
                 automacao: { cenariosNovos: 5, tempoManual: 0 },
                 healthScore: { target: 8.0, limits: { nonProdBugs: 20, prodBugs: 10, leadTime: 10 } }
             };
@@ -924,13 +912,6 @@
                     input('bugsProducao.total', 'Total', metas.bugsProducao?.total ?? 2)
                 );
 
-                // Eficiência
-                html += group('Eficiência QA (minutos)', 
-                    input('eficienciaQa.escrita', 'Escrita', metas.eficienciaQa?.escrita ?? 7) +
-                    input('eficienciaQa.execucao', 'Execução', metas.eficienciaQa?.execucao ?? 7) +
-                    input('eficienciaQa.reexecucao', 'Reexecução', metas.eficienciaQa?.reexecucao ?? 5)
-                );
-
                 // Outros
                 html += group('Outros', 
                     input('automacao.cenariosNovos', 'Automação (Novos Cenários)', metas.automacao?.cenariosNovos ?? 5) +
@@ -985,8 +966,7 @@
                     testesAutomatizados: { cenarios: 0, execucoes: 0, tempoManual: 0, tempoAutom: 0 },
                     listaUserStories: [],
                     reexecucaoBugsNaoProd: 0,
-                    reexecucaoBugsProd: 0,
-                    eficiencia: { escrita: 0, execucao: 0, reexecucao: 0 }
+                    reexecucaoBugsProd: 0
                 };
             }
 
