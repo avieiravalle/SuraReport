@@ -1480,7 +1480,8 @@ const dadosRelatorio = {
       },
       "leadTimeTestes": 3,
       "leadTimeBugs": 0,
-      "leadTimeBugsProd": 0
+      "leadTimeBugsProd": 0,
+      "planoDeAcao": ""
     },
     "Claims": {
       "sprint1": {
@@ -1614,7 +1615,8 @@ const dadosRelatorio = {
       },
       "leadTimeTestes": 3,
       "leadTimeBugs": 6,
-      "leadTimeBugsProd": 0
+      "leadTimeBugsProd": 0,
+      "planoDeAcao": ""
     },
     "Billing": {
       "sprint1": {
@@ -1712,7 +1714,8 @@ const dadosRelatorio = {
       },
       "leadTimeTestes": 13,
       "leadTimeBugs": 3,
-      "leadTimeBugsProd": 14
+      "leadTimeBugsProd": 14,
+      "planoDeAcao": ""
     },
     "Portal": {
       "sprint1": {
@@ -1839,7 +1842,8 @@ const dadosRelatorio = {
       },
       "leadTimeTestes": 12,
       "leadTimeBugs": 4,
-      "leadTimeBugsProd": 11
+      "leadTimeBugsProd": 11,
+      "planoDeAcao": ""
     },
     "Integracoes": {
       "sprint1": {
@@ -1959,7 +1963,8 @@ const dadosRelatorio = {
       },
       "leadTimeTestes": 5,
       "leadTimeBugs": 0,
-      "leadTimeBugsProd": 17
+      "leadTimeBugsProd": 17,
+      "planoDeAcao": ""
     }
   }
 };

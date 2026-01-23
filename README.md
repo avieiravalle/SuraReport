@@ -8,7 +8,6 @@ Este projeto é uma solução completa para gestão, visualização e reporte de
 *   **Visualização de Métricas:** Cobertura de código, Pass Rate, Bugs (Prod/Não-Prod), Lead Time e Automação.
 *   **Cálculo de ROI:** Análise financeira automática comparando o custo do QA vs. valor entregue (bugs evitados e testes executados).
 *   **Exportação PDF:** Geração de relatórios executivos em PDF com quebra de página inteligente.
-*   **Planos de Ação:** Campo para registro e persistência local de planos de ação para métricas não atingidas.
 
 ### 2. Formulário de Dados
 *   **Entrada Manual:** Interface amigável para inserir ou editar dados de Sprints e consolidado mensal.
@@ -20,7 +19,12 @@ Este projeto é uma solução completa para gestão, visualização e reporte de
 *   **Análise de Retrabalho:** Gráficos específicos para monitorar o volume de bugs reexecutados.
 *   **Tabela de Tendências:** Comparativo percentual entre o mês atual e o anterior.
 
-### 4. Automação de Preenchimento (Cypress)
+### 4. Planos de Ação (Centers)
+*   **Visão Consolidada:** Exibe cards para cada Center com médias históricas de Cobertura, Pass Rate, Bugs e Automação.
+*   **Gestão de Planos:** Campo de texto para definir ações corretivas baseadas no histórico.
+*   **Exportação:** Permite exportar todos os planos em um único PDF.
+
+### 5. Automação de Preenchimento (Cypress)
 *   **Bulk Insert:** Script para preencher dados de múltiplos produtos simultaneamente de forma automatizada.
 
 ---
@@ -53,6 +57,8 @@ O projeto utiliza um servidor `express` customizado para servir as páginas e li
 | **Relatório Mensal** | `3000` | `http://localhost:3000` | Visualização principal para stakeholders. |
 | **Formulário** | `3001` | `http://localhost:3001` | Entrada de dados (Habilita salvamento em disco). |
 | **Comparação** | `3002` | `http://localhost:3002` | Análise de tendências e gráficos históricos. |
+| **Metas 2026** | `3003` | `http://localhost:3003` | Planejamento de metas e cronograma de atividades. |
+| **Planos de Ação** | `3004` | `http://localhost:3004` | Gestão de planos de ação por center (Médias Históricas). |
 
 > **Nota:** Para salvar dados, você deve usar a porta **3001**. As outras portas são apenas para leitura/visualização.
 
@@ -122,5 +128,8 @@ O Cypress irá:
     *   Clique em **Salvar como PDF** para gerar o relatório executivo.
 6.  **Analisar Tendências:**
     *   Acesse `http://localhost:3002` para ver a evolução comparada aos meses anteriores.
+7.  **Definir Planos de Ação:**
+    *   Acesse `http://localhost:3004`.
+    *   Analise as médias históricas e defina as ações para o próximo ciclo.
 
 ---

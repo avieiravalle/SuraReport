@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('feed-data-btn').addEventListener('click', () => window.open('formulario-dados.html', '_blank'));
     document.getElementById('new-month-btn').addEventListener('click', createNewMonth);
     document.getElementById('compare-btn').addEventListener('click', openComparisonReport);
+    document.getElementById('action-plans-btn').addEventListener('click', () => window.open(`http://${window.location.hostname}:3004`, '_blank'));
     document.getElementById('save-pdf-btn').addEventListener('click', () => saveToPDF('download'));
-    document.getElementById('email-pdf-btn').addEventListener('click', () => saveToPDF('email'));
 
     // Carregar relatório inicial
     updateReport();

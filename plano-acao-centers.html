@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos de Ação por Center</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="dadosPreenchimento.js"></script>
+    <script src="utils.js"></script>
+    <style>
+        :root {
+            --primary-color: #0033A0;
+            --secondary-color: #00A79D;
+            --tertiary-color: #e74c3c;
+            --background-color: #f4f6f9;
+            --card-background: white;
+            --text-color: #58595B;
+            --border-color: #ddd;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--background-color); color: var(--text-color); padding: 20px; }
+
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        header { 
+            background: var(--card-background); padding: 20px; border-radius: 8px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; 
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        header h1 { color: var(--primary-color); font-size: 1.5rem; }
+        
+        .controls { display: flex; gap: 15px; align-items: center; }
+        select, button { padding: 10px 15px; border-radius: 5px; border: 1px solid var(--border-color); cursor: pointer; }
+        button.primary { background-color: var(--primary-color); color: white; border: none; font-weight: bold; }
+        button.primary:hover { background-color: #00227A; }
+
+        .grid-centers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .center-card {
+            background: var(--card-background);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 20px;
+            border-top: 4px solid var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .center-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .center-header h2 { color: var(--primary-color); font-size: 1.2rem; }
+
+        .metrics-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .metric-item { text-align: center; }
+        .metric-label { font-size: 0.75rem; color: #777; display: block; }
+        .metric-value { font-weight: bold; font-size: 0.9rem; }
+        .metric-value.bad { color: var(--tertiary-color); }
+        .metric-value.good { color: var(--secondary-color); }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            resize: vertical;
+            font-family: monospace;
+            margin-bottom: 10px;
+        }
+
+        .toast {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--secondary-color); color: white;
+            padding: 15px 25px; border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0; transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Planos de Ação</h1>
+                <p style="color: #666; font-size: 0.9rem;">Defina as ações corretivas para cada produto.</p>
+            </div>
+            <div class="controls">
+                <button id="export-pdf-btn">Exportar PDF</button>
+                <button class="primary" id="save-all-btn">Salvar Todos</button>
+            </div>
+        </header>
+
+        <div id="centers-grid" class="grid-centers"></div>
+    </div>
+    <div id="toast" class="toast">Dados salvos com sucesso!</div>
+    <script src="plano-acao.js"></script>
+</body>
+</html>
