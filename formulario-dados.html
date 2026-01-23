@@ -423,14 +423,6 @@
                     if (typeof productData[sprintKey].testesAutomatizados.execucoes === 'undefined') {
                         productData[sprintKey].testesAutomatizados.execucoes = 0;
                     }
-                    
-                    // Migração do campo legado 'reexecucaoBugs' para 'reexecucaoBugsNaoProd'
-                    if (typeof productData[sprintKey].reexecucaoBugs !== 'undefined') {
-                        productData[sprintKey].reexecucaoBugsNaoProd = productData[sprintKey].reexecucaoBugs;
-                        delete productData[sprintKey].reexecucaoBugs;
-                    }
-                    if (typeof productData[sprintKey].reexecucaoBugsNaoProd === 'undefined') productData[sprintKey].reexecucaoBugsNaoProd = 0;
-                    if (typeof productData[sprintKey].reexecucaoBugsProd === 'undefined') productData[sprintKey].reexecucaoBugsProd = 0;
 
                     // Inicialização da lista de User Stories (Nova Funcionalidade)
                     if (!productData[sprintKey].listaUserStories) productData[sprintKey].listaUserStories = [];
@@ -452,6 +444,11 @@
                         setNestedValue(targetObj, field, isNaN(value) ? 0 : value);
                     }
                 });
+                
+                // Atualiza visualmente os campos calculados de retrabalho se estivermos no form mensal
+                if (container.id === 'monthly-data-form') {
+                    updateReworkCalculations();
+                }
             }
 
             function validateForm() {
@@ -522,6 +519,33 @@
                 htmlBuffer += generateMonthlyDataFormHTML(productData); // Usa a nova função consolidada
 
                 formContainer.innerHTML = htmlBuffer; // Atualiza o DOM uma única vez
+                
+                // Adiciona listeners para cálculo automático de retrabalho
+                const bugInputs = formContainer.querySelectorAll('input[data-field^="bugsProducao"], input[data-field^="bugsNaoProdutivos"]');
+                bugInputs.forEach(input => {
+                    input.addEventListener('input', updateReworkCalculations);
+                });
+                
+                // Cálculo inicial
+                updateReworkCalculations();
+            }
+
+            function updateReworkCalculations() {
+                const sumInputs = (prefix) => {
+                    const inputs = document.querySelectorAll(`input[data-field^="${prefix}"]`);
+                    let sum = 0;
+                    inputs.forEach(inp => sum += (parseFloat(inp.value) || 0));
+                    return sum;
+                };
+
+                const totalProd = sumInputs('bugsProducao');
+                const totalNonProd = sumInputs('bugsNaoProdutivos');
+
+                const displayProd = document.getElementById('calc-rework-prod');
+                const displayNonProd = document.getElementById('calc-rework-non-prod');
+
+                if (displayProd) displayProd.value = totalProd;
+                if (displayNonProd) displayNonProd.value = totalNonProd;
             }
 
             function generateMonthlyDataFormHTML(data) {
@@ -552,7 +576,13 @@
                                 ${generateInput('productData', 'leadTimeBugsProd', data.leadTimeBugsProd, 'Cycle Time Bugs Prod (dias)')}
                             </div>
                         </div>
-
+                        
+                        <div class="input-group" style="background-color: #f0f7ff; padding: 10px; border-radius: 4px; border: 1px solid #cce5ff; margin-top: 15px;">
+                            <label style="color: #0033A0;">Volume de Retrabalho (Total de Bugs)</label>
+                            <div class="sub-group" style="grid-template-columns: repeat(2, 1fr);">
+                                <div class="input-group"><label>Total Prod</label><input type="number" id="calc-rework-prod" readonly style="background-color: #e9ecef; font-weight: bold;"></div>
+                                <div class="input-group"><label>Total Não-Prod</label><input type="number" id="calc-rework-non-prod" readonly style="background-color: #e9ecef; font-weight: bold;"></div>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -588,13 +618,6 @@
                                 ${generateInput(sprintKey, 'testesAutomatizados.execucoes', data.testesAutomatizados.execucoes, 'Execuções')}
                                 ${generateInput(sprintKey, 'testesAutomatizados.tempoManual', data.testesAutomatizados.tempoManual, 'Tempo Manual (min)')}
                                 ${generateInput(sprintKey, 'testesAutomatizados.tempoAutom', data.testesAutomatizados.tempoAutom, 'Tempo Autom. (min)')}
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label>Métricas de Retrabalho</label>
-                            <div class="sub-group" style="grid-template-columns: repeat(2, 1fr);">
-                                ${generateInput(sprintKey, 'reexecucaoBugsNaoProd', data.reexecucaoBugsNaoProd || 0, 'Reexec. Não-Prod')}
-                                ${generateInput(sprintKey, 'reexecucaoBugsProd', data.reexecucaoBugsProd || 0, 'Reexec. Prod')}
                             </div>
                         </div>
                     </div>
@@ -964,9 +987,7 @@
                     usSprint: 0,
                     casosTestePorUs: 0,
                     testesAutomatizados: { cenarios: 0, execucoes: 0, tempoManual: 0, tempoAutom: 0 },
-                    listaUserStories: [],
-                    reexecucaoBugsNaoProd: 0,
-                    reexecucaoBugsProd: 0
+                    listaUserStories: []
                 };
             }
 

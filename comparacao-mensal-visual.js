@@ -658,15 +658,16 @@ document.addEventListener('DOMContentLoaded', function() {
         let totalProd = 0;
         let totalNonProd = 0;
 
-        months.forEach(month => {
-            const centerData = dadosRelatorio[month]?.[currentCenter];
+        if (months.length > 0) {
+            const lastMonth = months[months.length - 1];
+            const centerData = dadosRelatorio[lastMonth]?.[currentCenter];
             if (centerData) {
-                const s1 = centerData.sprint1 || {};
-                const s2 = centerData.sprint2 || {};
-                totalProd += (s1.reexecucaoBugsProd || 0) + (s2.reexecucaoBugsProd || 0);
-                totalNonProd += (s1.reexecucaoBugsNaoProd || 0) + (s2.reexecucaoBugsNaoProd || 0);
+                totalProd = getTotalProductionBugs(centerData);
+                
+                const nonProdBugs = getNonProductionBugsObject(centerData);
+                totalNonProd = (nonProdBugs.baixa + nonProdBugs.media + nonProdBugs.alta);
             }
-        });
+        }
 
         if (reworkChart) {
             reworkChart.data.datasets[0].data = [totalProd, totalNonProd];
@@ -677,7 +678,7 @@ document.addEventListener('DOMContentLoaded', function() {
         reworkChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Reexecução (Prod)', 'Reexecução (Não-Prod)'],
+                labels: ['Bugs Produção', 'Bugs Não-Prod'],
                 datasets: [{
                     data: [totalProd, totalNonProd],
                     backgroundColor: [
@@ -697,7 +698,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 maintainAspectRatio: false,
                 cutout: '50%',
                 plugins: {
-                    title: { display: true, text: 'Volume de Retrabalho (Total Acumulado)' },
+                    title: { display: true, text: 'Volume de Retrabalho (Último Mês)' },
                     datalabels: {
                         color: '#fff',
                         font: { weight: 'bold', size: 14 },
