@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('new-month-btn').addEventListener('click', createNewMonth);
     document.getElementById('compare-btn').addEventListener('click', openComparisonReport);
     document.getElementById('action-plans-btn').addEventListener('click', () => window.open(`http://${window.location.hostname}:3004`, '_blank'));
-    document.getElementById('save-pdf-btn').addEventListener('click', () => saveToPDF('download'));
+    document.getElementById('save-pdf-btn').addEventListener('click', () => saveToPDF());
 
     // Carregar relatório inicial
     updateReport();
@@ -663,11 +663,9 @@ function downloadFile(content, fileName) {
 /**
  * Controla o estado visual do botão de PDF.
  * @param {boolean} isLoading - Se a geração de PDF está em andamento.
- * @param {string} mode - 'download' ou 'email'
  */
-function setPdfButtonLoading(isLoading, mode = 'download') {
-    const btnId = mode === 'email' ? 'email-pdf-btn' : 'save-pdf-btn';
-    const btn = document.getElementById(btnId);
+function setPdfButtonLoading(isLoading) {
+    const btn = document.getElementById('save-pdf-btn');
     const btnText = btn.querySelector('.btn-text');
     const btnLoader = btn.querySelector('.btn-loader');
 
@@ -678,59 +676,12 @@ function setPdfButtonLoading(isLoading, mode = 'download') {
 }
 
 /**
- * Adds a canvas image to a PDF, handling page breaks for tall content.
- * It draws the first part of the image on the current page, then adds new pages for the rest.
- * @param {jsPDF} pdf - The jsPDF instance.
- * @param {HTMLCanvasElement} canvas - The canvas to add.
- */
-function addCanvasWithPageBreaks(pdf, canvas) {
-    const margin = 10; // 10mm de margem
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    
-    // Área de conteúdo útil na página, descontando as margens
-    const contentWidth = pdfWidth - (margin * 2);
-    const contentHeight = pdfHeight - (margin * 2);
-
-    const imgData = canvas.toDataURL('image/png');
-    // Altura total da imagem, dimensionada para a largura do conteúdo
-    const totalImgHeight = (canvas.height * contentWidth) / canvas.width;
-
-    let heightLeft = totalImgHeight;
-    let position = 0;
-
-    // Adiciona a imagem na página atual, respeitando as margens.
-    pdf.addImage(imgData, 'PNG', margin, margin, contentWidth, totalImgHeight);
-    heightLeft -= contentHeight;
-
-    // Adiciona páginas subsequentes se a imagem for mais alta que a área de conteúdo
-    while (heightLeft > 0) {
-        position -= contentHeight; // Desloca a posição para cima pela altura do conteúdo já desenhado.
-        pdf.addPage();
-        // Desenha a mesma imagem grande, mas deslocada verticalmente para que a próxima seção apareça na nova página
-        pdf.addImage(imgData, 'PNG', margin, position + margin, contentWidth, totalImgHeight);
-        heightLeft -= contentHeight;
-    }
-}
-
-/**
  * Gera e salva o relatório completo de todos os centers como um arquivo PDF.
- * @param {string} mode - 'download' para baixar, 'email' para enviar.
  */
-async function saveToPDF(mode = 'download') {
+async function saveToPDF() {
     if (appState.isGeneratingPdf) return;
     
-    let emailAddress = null;
-    if (mode === 'email') {
-        emailAddress = prompt("Digite o e-mail do destinatário:");
-        if (!emailAddress) return;
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAddress)) {
-            showToast('E-mail inválido.', 'error');
-            return;
-        }
-    }
-
-    setPdfButtonLoading(true, mode);
+    setPdfButtonLoading(true);
 
     const { jsPDF } = window.jspdf;
     const reportContainer = document.getElementById('report-container');
@@ -827,46 +778,11 @@ async function saveToPDF(mode = 'download') {
             pdf.addImage(canvas, 'PNG', 0, 0, imgWidth, imgHeight);
         }
 
-        // --- PARTE 2: Adicionar página de Metodologia ---
-        pdf.addPage('a4', 'p');
-        const methodologyElement = document.getElementById('pdf-methodology-section');
-        methodologyElement.style.display = 'block'; // Torna visível para captura
-        const methodologyCanvas = await html2canvas(methodologyElement, {
-            scale: 2,
-            useCORS: true
-        });
-        methodologyElement.style.display = 'none'; // Esconde novamente
-        addCanvasWithPageBreaks(pdf, methodologyCanvas);
-
         const reportDateText = new Date(appState.currentMonth).toLocaleString('pt-BR', { month: 'long', year: 'numeric', timeZone: 'UTC' }).replace(' de ', '_');
         const fileName = `Relatorio_Mensal_Todos_Centers_${reportDateText}.pdf`;
 
-        if (mode === 'download') {
-            pdf.save(fileName);
-            showToast('PDF gerado e baixado com sucesso!', 'success');
-        } else if (mode === 'email') {
-            // Converte PDF para Base64 (sem o prefixo data:application/pdf;base64,)
-            const pdfBase64 = pdf.output('datauristring').split(',')[1];
-            
-            // Envia para o backend
-            const response = await fetch('/send-email', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    to: emailAddress,
-                    subject: `Relatório Mensal de Qualidade - ${reportDateText.replace('_', ' ')}`,
-                    body: `Olá,\n\nSegue em anexo o relatório mensal de qualidade referente a ${reportDateText.replace('_', ' ')}.\n\nAtenciosamente,\nEquipe de QA`,
-                    attachmentName: fileName,
-                    attachmentData: pdfBase64
-                })
-            });
-
-            if (response.ok) {
-                showToast('E-mail enviado com sucesso!', 'success');
-            } else {
-                throw new Error('Erro ao enviar e-mail.');
-            }
-        }
+        pdf.save(fileName);
+        showToast('PDF gerado e baixado com sucesso!', 'success');
 
     } catch (error) {
         console.error("Erro ao gerar PDF:", error);
@@ -881,7 +797,7 @@ async function saveToPDF(mode = 'download') {
         document.getElementById('product-select').value = originalCurrentCenter;
         updateReport();
 
-        setPdfButtonLoading(false, mode);
+        setPdfButtonLoading(false);
     }
 }
 

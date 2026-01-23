@@ -84,32 +84,6 @@ function calculateMonthHealthScore(centerData) {
 
     return totalScore;
 }
-/**
- * Adiciona uma imagem de canvas a um PDF, tratando quebras de página para conteúdo longo.
- * @param {jsPDF} pdf - A instância do jsPDF.
- * @param {HTMLCanvasElement} canvas - O canvas a ser adicionado.
- */
-function addCanvasWithPageBreaks(pdf, canvas) {
-    const margin = 10; // 10mm de margem
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    const contentWidth = pdfWidth - (margin * 2);
-    const contentHeight = pdfHeight - (margin * 2);
-    const imgData = canvas.toDataURL('image/png');
-    const totalImgHeight = (canvas.height * contentWidth) / canvas.width;
-    let heightLeft = totalImgHeight;
-    let position = 0;
-
-    pdf.addImage(imgData, 'PNG', margin, margin, contentWidth, totalImgHeight);
-    heightLeft -= contentHeight;
-
-    while (heightLeft > 0) {
-        position -= contentHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', margin, position + margin, contentWidth, totalImgHeight);
-        heightLeft -= contentHeight;
-    }
-}
 
 document.addEventListener('DOMContentLoaded', function() {
     updateMetricTargets();
@@ -1610,17 +1584,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             
-            // Adiciona a página final de metodologia
-            pdf.addPage();
-            const methodologyElement = document.getElementById('pdf-methodology-section');
-            methodologyElement.style.display = 'block'; // Torna visível para captura
-            const methodologyCanvas = await html2canvas(methodologyElement, {
-                scale: 2,
-                useCORS: true
-            });
-            methodologyElement.style.display = 'none'; // Esconde novamente
-            addCanvasWithPageBreaks(pdf, methodologyCanvas);
-
             pdf.save(`Comparacao_Mensal_Todos_Centers.pdf`);
 
         } catch (error) {

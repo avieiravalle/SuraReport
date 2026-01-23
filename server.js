@@ -40,56 +40,6 @@ function startServer(port, defaultFile, saveOptions = null) {
                 res.send({ message: 'Arquivo atualizado com sucesso!' });
             });
         });
-
-        // Endpoint de Envio de E-mail
-        app.post('/send-email', async (req, res) => {
-            let nodemailer;
-            try {
-                nodemailer = require('nodemailer');
-            } catch (e) {
-                console.error("Erro: Módulo 'nodemailer' não encontrado. Execute 'npm install' para corrigir.");
-                return res.status(500).send({ message: 'Funcionalidade de e-mail não configurada no servidor.' });
-            }
-
-            const { to, subject, body, attachmentName, attachmentData } = req.body;
-
-            if (!to || !attachmentData) {
-                return res.status(400).send({ message: 'Dados incompletos para envio.' });
-            }
-
-            // Configuração do Transporter (SMTP)
-            // NOTA: Para produção, configure suas credenciais reais (Gmail, Outlook, AWS SES, etc.)
-            const transporter = nodemailer.createTransport({
-                // Exemplo genérico (substitua pelo seu SMTP):
-                host: "smtp.ethereal.email", 
-                port: 587,
-                secure: false, 
-                auth: {
-                    user: 'user@ethereal.email', 
-                    pass: 'pass' 
-                }
-            });
-
-            const mailOptions = {
-                from: '"Status Report System" <no-reply@example.com>',
-                to: to,
-                subject: subject || 'Relatório de Qualidade',
-                text: body || 'Segue em anexo o relatório solicitado.',
-                attachments: [
-                    {
-                        filename: attachmentName || 'relatorio.pdf',
-                        content: attachmentData,
-                        encoding: 'base64'
-                    }
-                ]
-            };
-
-            // Simulação de envio (log no console) para evitar erros sem SMTP configurado
-            console.log(`[EMAIL] Enviando para: ${to} | Anexo: ${attachmentName}`);
-            // await transporter.sendMail(mailOptions); // Descomente para enviar de verdade
-            
-            res.send({ message: 'Solicitação de envio processada com sucesso!' });
-        });
     }
 
     app.listen(port);
