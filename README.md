@@ -5,7 +5,7 @@ Este projeto é uma solução completa para gestão, visualização e reporte de
 ## 🚀 Funcionalidades
 
 ### 1. Relatório Mensal (Dashboard)
-*   **Visualização de Métricas:** Cobertura de código, Pass Rate, Bugs (Prod/Não-Prod), Lead Time e Automação.
+*   **Visualização de Métricas:** Cobertura de código, Pass Rate, Bugs (Prod/Não-Prod) e Automação.
 *   **Cálculo de ROI:** Análise financeira automática comparando o custo do QA vs. valor entregue (bugs evitados e testes executados).
 *   **Exportação PDF:** Geração de relatórios executivos em PDF com quebra de página inteligente.
 
@@ -16,7 +16,6 @@ Este projeto é uma solução completa para gestão, visualização e reporte de
 
 ### 3. Comparação Visual (Tendências)
 *   **Gráficos Evolutivos:** Linhas do tempo para Cobertura, Lead Time e Saúde Geral do projeto.
-*   **Análise de Retrabalho:** Gráficos específicos para monitorar o volume de bugs reexecutados.
 *   **Tabela de Tendências:** Comparativo percentual entre o mês atual e o anterior.
 
 ### 4. Planos de Ação (Centers)

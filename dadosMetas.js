@@ -4,8 +4,6 @@ const dadosMetas = {
       "coberturaCodigo": 80,
       "passRate": 95,
       "coberturaTestes": 100,
-      "leadTimeTestes": 1,
-      "leadTimeBugs": 2,
       "bugsProducao": 2,
       "bugsNaoProd": 10,
       "automacao": 5
@@ -52,34 +50,6 @@ const dadosMetas = {
         100,
         100,
         100
-      ],
-      "leadTimeTestes": [
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1
-      ],
-      "leadTimeBugs": [
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2,
-        2
       ],
       "bugsProducao": [
         8,

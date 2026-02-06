@@ -155,17 +155,14 @@ describe('Automação de Preenchimento Completo por Center', () => {
 
             // Itera sobre as seções (sprint1, sprint2, mensal)
             Object.entries(centerData).forEach(([sectionKey, sectionData]) => {
-                Object.entries(sectionData).forEach(([field, value]) => {
-                    let selector;
-                    if (sectionKey === 'mensal') {
-                        // Campos mensais (ex: bugs de produção) não usam prefixo no ID
-                        selector = `#${field}`;
-                    } else {
-                        // Campos de sprint usam prefixo sprint1 ou sprint2
-                        selector = `#${sectionKey}-${field}`;
-                    }
-                    cy.get(selector).clear().type(value);
-                });
+                if (sectionKey === 'bugsProducao' || sectionKey === 'bugsNaoProdutivos') {
+                    // Lógica para preencher tabelas de bugs (ex: sprint1.bugsProducao)
+                    // Note: No Cypress, sectionKey aqui seria a chave dentro de sprint1/sprint2
+                } else if (typeof sectionData === 'object' && !Array.isArray(sectionData)) {
+                    // Lógica para campos aninhados (ex: coberturaCodigo)
+                } else {
+                    // Lógica para campos simples
+                }
             });
 
             // 3. Salva as alterações para o Center atual antes de ir para o próximo

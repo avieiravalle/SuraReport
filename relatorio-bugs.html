@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Bugs - Qualidade</title>
+    <script src="dadosPreenchimento.js"></script>
+    <script src="utils.js"></script>
+    <style>
+        :root {
+            --primary-color: #0033A0; --secondary-color: #00A79D; --tertiary-color: #e74c3c;
+            --header-color: #0033A0; --body-background: #f4f6f9; --text-color: #58595B;
+            --card-background: white; --table-header-background: #f2f2f2; --table-row-alt-background: #f9f9f9;
+            --border-color: #ddd; --card-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            --container-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); --card-border-radius: 8px;
+            --font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-family-base); }
+        body { background-color: var(--body-background); color: var(--text-color); line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background-color: var(--card-background); border-radius: var(--card-border-radius); box-shadow: var(--container-shadow); padding: 30px; }
+        header { text-align: center; margin-bottom: 30px; }
+        header #company-logo { max-height: 45px; margin-bottom: 15px; }
+        header h1 { color: var(--header-color); }
+        .controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 15px; background-color: #f8f9fa; border-radius: 6px; }
+        .control-group { display: flex; align-items: center; gap: 15px; }
+        label { font-weight: 500; }
+        select, button { padding: 8px 12px; border-radius: 4px; border: 1px solid var(--border-color); background-color: white; font-size: 14px; cursor: pointer; }
+        button { background-color: var(--primary-color); color: white; border: none; transition: background-color 0.3s; }
+        button:hover { background-color: #00227A; }
+        #back-btn { background-color: #6c757d; }
+        #back-btn:hover { background-color: #5a6268; }
+        .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .sprint-column { display: flex; flex-direction: column; gap: 20px; }
+        .sprint-title-header { text-align: center; color: var(--primary-color); background-color: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 10px; }
+        .bugs-section { border: 1px solid var(--border-color); border-radius: 6px; padding: 20px; background-color: #fff; }
+        .section-header { color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px; font-size: 1.2rem; }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th, .data-table td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        .data-table th { background-color: var(--table-header-background); font-weight: 600; }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table .total-row td { font-weight: bold; border-top: 2px solid #ccc; }
+        .positive { color: var(--secondary-color); }
+        .negative { color: var(--tertiary-color); font-weight: bold; }
+        @media (max-width: 768px) {
+            .main-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="report-container">
+        <header>
+            <img src="logo.png" alt="Logo Sura Seguros" id="company-logo">
+            <h1>Relatório de Bugs e Escapes</h1>
+            <p id="report-date"></p>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="month-select">Mês:</label>
+                <select id="month-select"></select>
+                
+                <label for="product-select">Produto:</label>
+                <select id="product-select"></select>
+            </div>
+            <div class="control-group">
+                <button id="back-btn">Voltar ao Relatório Principal</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Coluna da Sprint 1 -->
+            <div class="sprint-column">
+                <h2 id="sprint1-header" class="sprint-title-header">Sprint 1</h2>
+                <div class="bugs-section" id="sprint1-escaped-bugs-section">
+                    <h3 class="section-header">Bugs que Escaparam para Produção</h3>
+                    <div id="sprint1-escaped-bugs-content">
+                        <!-- Conteúdo dos Bugs Produtivos da Sprint 1 -->
+                    </div>
+                </div>
+                <div class="bugs-section" id="sprint1-internal-bugs-section">
+                    <h3 class="section-header">Bugs Internos / Não Produtivos</h3>
+                    <div id="sprint1-internal-bugs-content">
+                        <!-- Conteúdo dos Bugs Não Produtivos da Sprint 1 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna da Sprint 2 -->
+            <div class="sprint-column">
+                <h2 id="sprint2-header" class="sprint-title-header">Sprint 2</h2>
+                <div class="bugs-section" id="sprint2-escaped-bugs-section">
+                    <h3 class="section-header">Bugs que Escaparam para Produção</h3>
+                    <div id="sprint2-escaped-bugs-content"></div>
+                </div>
+                <div class="bugs-section" id="sprint2-internal-bugs-section">
+                    <h3 class="section-header">Bugs Internos / Não Produtivos</h3>
+                    <div id="sprint2-internal-bugs-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="relatorio-bugs.js" defer></script>
+</body>
+</html>

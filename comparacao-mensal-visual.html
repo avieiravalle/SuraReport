@@ -57,11 +57,9 @@
         .highlight-section .highlight-trend { font-size: 1.1em; font-weight: 600; }
         .highlight-section small { display: block; margin-top: 5px; color: #666; }
 
-        .main-chart-container { height: 450px; margin-bottom: 30px; padding: 20px; border: 1px solid var(--border-color); border-radius: var(--card-border-radius); box-shadow: var(--card-shadow); }
-        
         .charts-section, .trend-analysis-section { background-color: var(--card-background); border-radius: var(--card-border-radius); box-shadow: var(--card-shadow); padding: 20px; border: 1px solid var(--border-color); margin-bottom: 30px; }
         .section-header { color: var(--header-color); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color); font-size: 1.4em; }
-        .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; }
+        .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         .chart-container { height: 380px; padding: 15px; border: 1px solid var(--border-color); border-radius: var(--card-border-radius); }
         .chart-container h3 { text-align: center; margin-bottom: 15px; color: var(--primary-color); font-weight: 600; }
 
@@ -85,7 +83,7 @@
         .main-chart-container {
             background-color: var(--card-background); padding: 20px; border-radius: var(--card-border-radius);
             box-shadow: var(--card-shadow); border: 1px solid var(--border-color);
-            height: 350px;
+            height: 400px;
             margin-bottom: 30px;
         }
 
@@ -225,11 +223,6 @@
                 <small>Média das sprints</small>
             </div>
             <div class="summary-card">
-                <h3>Total de Bugs (Mês)</h3>
-                <p id="bugs-value">--</p>
-                <small>Soma: Produtivos & Não Produtivos</small>
-            </div>
-            <div class="summary-card">
                 <h3>Cobertura de Código</h3>
                 <p id="coverage-value">--%</p>
                 <small>Média geral do mês</small>
@@ -262,15 +255,6 @@
                 </div>
                 <div class="chart-container">
                     <canvas id="bugs-chart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <canvas id="bugs-severity-chart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <canvas id="rework-chart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <canvas id="leadtime-chart"></canvas>
                 </div>
                 <div class="chart-container">
                     <canvas id="automated-tests-chart"></canvas>

@@ -16,9 +16,6 @@ const METRIC_TARGETS = {
     passRate: { value: 90, higherIsBetter: true },
     densidadeTestes: { value: 4, higherIsBetter: true },
     coberturaTestesPercentual: { value: 100, higherIsBetter: true },
-    leadTimeTestes: { value: 2.5, higherIsBetter: false },
-    leadTimeBugs: { value: 2.0, higherIsBetter: false },
-    leadTimeBugsProd: { value: 2.0, higherIsBetter: false },
     bugsNaoProdutivos: {
         baixa: { value: 5, higherIsBetter: false },
         media: { value: 3, higherIsBetter: false },
@@ -52,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('feed-data-btn').addEventListener('click', () => window.open('formulario-dados.html', '_blank'));
     document.getElementById('new-month-btn').addEventListener('click', createNewMonth);
     document.getElementById('compare-btn').addEventListener('click', openComparisonReport);
+    document.getElementById('bugs-report-btn').addEventListener('click', () => window.location.href = 'relatorio-bugs.html');
     document.getElementById('action-plans-btn').addEventListener('click', () => window.open(`http://${window.location.hostname}:3004`, '_blank'));
     document.getElementById('save-pdf-btn').addEventListener('click', () => saveToPDF());
 
@@ -73,9 +71,6 @@ function updateMetricTargets() {
     if (metas.passRate !== undefined) METRIC_TARGETS.passRate.value = metas.passRate;
     if (metas.densidadeTestes !== undefined) METRIC_TARGETS.densidadeTestes.value = metas.densidadeTestes;
     if (metas.coberturaTestesPercentual !== undefined) METRIC_TARGETS.coberturaTestesPercentual.value = metas.coberturaTestesPercentual;
-    if (metas.leadTimeTestes !== undefined) METRIC_TARGETS.leadTimeTestes.value = metas.leadTimeTestes;
-    if (metas.leadTimeBugs !== undefined) METRIC_TARGETS.leadTimeBugs.value = metas.leadTimeBugs;
-    if (metas.leadTimeBugsProd !== undefined) METRIC_TARGETS.leadTimeBugsProd.value = metas.leadTimeBugsProd;
 
     if (metas.bugsNaoProdutivos) {
         setVal(METRIC_TARGETS.bugsNaoProdutivos, 'baixa', metas.bugsNaoProdutivos.baixa);
@@ -174,9 +169,6 @@ function updateReport() {
 
     updateReportDate();
     updateSprintData();
-    updateExecucoesQA();
-    updateBugsNaoProdutivos();
-    updateBugsProdutivos();
 }
 
 /**
@@ -184,7 +176,7 @@ function updateReport() {
  */
 function showDataError() {
     const errorMessageHTML = '<p style="color: var(--tertiary-color); text-align: center;">Dados não disponíveis para a seleção atual.</p>';
-    const contentIds = ['sprint1-content', 'sprint2-content', 'bugs-content'];
+    const contentIds = ['sprint1-content', 'sprint2-content'];
     contentIds.forEach(id => {
         const element = document.getElementById(id);
         if (element) element.innerHTML = errorMessageHTML;
@@ -224,96 +216,6 @@ function updateSprintData() {
     const cumulativeS2 = calculateCumulativeScenarios(appState.currentMonth, appState.currentCenter, 'sprint2');
     const sprint2Content = document.getElementById('sprint2-content');
     sprint2Content.replaceChildren(generateSprintHTML(sprint2, cumulativeS2, previousIdsS2));
-}
-
-/**
- * Consolida os bugs não produtivos de ambas as sprints.
- */
-function getNonProductionBugsObject(centerData) {
-    // Prioriza a nova estrutura mensal, onde os bugs não produtivos são um objeto no nível do center.
-    if (centerData.bugsNaoProdutivos) {
-        return centerData.bugsNaoProdutivos;
-    }
-    // Fallback para a estrutura antiga (dados dentro de cada sprint) para garantir retrocompatibilidade com relatórios antigos.
-    const s1 = centerData.sprint1?.bugsNaoProdutivos || { baixa: 0, media: 0, alta: 0 };
-    const s2 = centerData.sprint2?.bugsNaoProdutivos || { baixa: 0, media: 0, alta: 0 };
-    return {
-        baixa: (s1.baixa || 0) + (s2.baixa || 0),
-        media: (s1.media || 0) + (s2.media || 0),
-        alta: (s1.alta || 0) + (s2.alta || 0)
-    };
-}
-
-/**
- * Atualiza a seção de Bugs Não Produtivos com os dados consolidados do mês.
- */
-function updateBugsNaoProdutivos() {
-    const centerData = dadosRelatorio[appState.currentMonth][appState.currentCenter];
-    const bugsContent = document.getElementById('bugs-nao-prod-content');
-    bugsContent.replaceChildren(); // Limpa conteúdo anterior
-
-    if (!centerData) return;
-
-    const bugsData = getNonProductionBugsObject(centerData);
-    bugsContent.appendChild(generateBugsNaoProdutivosHTML(bugsData));
-}
-
-
-/**
- * Atualiza a seção de Bugs Produtivos com os dados consolidados do mês.
- */
-function updateBugsProdutivos() {
-    const centerData = dadosRelatorio[appState.currentMonth][appState.currentCenter];
-    const bugsContent = document.getElementById('bugs-content');
-    bugsContent.replaceChildren(); // Limpa conteúdo anterior
-
-    if (!centerData) return;
-
-    const bugsData = getProductionBugsObject(centerData);
-    bugsContent.appendChild(generateBugsProdutivosHTML(bugsData));
-}
-
-/**
- * Atualiza a seção de Execuções QA com os dados consolidados do mês.
- */
-function updateExecucoesQA() {
-    const centerData = dadosRelatorio[appState.currentMonth][appState.currentCenter];
-    const content = document.getElementById('execucoes-qa-content');
-    content.replaceChildren(); // Limpa conteúdo anterior
-
-    if (!centerData) return;
-
-    content.appendChild(generateExecucoesQAHTML(centerData));
-}
-
-/**
- * Gera o conteúdo HTML para a seção de Execuções QA, com médias do mês.
- * @param {object} centerData - Dados do centro para o mês.
- * @returns {HTMLTableElement} - O elemento de tabela com os dados.
- */
-function generateExecucoesQAHTML(centerData) {
-    // Função de fallback para lidar com a estrutura de dados antiga e a nova.
-    const getMetric = (metricKey) => {
-        // Prioriza a nova estrutura (dados no nível do mês)
-        if (centerData[metricKey] !== undefined) {
-            return centerData[metricKey];
-        }
-        // Fallback para a estrutura antiga (calcula a média das sprints)
-        const s1_val = centerData.sprint1?.[metricKey] || 0;
-        const s2_val = centerData.sprint2?.[metricKey] || 0;
-        if (s1_val > 0 && s2_val > 0) return (s1_val + s2_val) / 2;
-        return s1_val || s2_val;
-    };
-
-    const leadTimeTestes = getMetric('leadTimeTestes');
-    const leadTimeBugs = getMetric('leadTimeBugs');
-    const leadTimeBugsProd = getMetric('leadTimeBugsProd');
-
-    return createTable('Médias do Mês', [
-        createMetricRow('Cycle Time de Testes', leadTimeTestes.toFixed(1), ' dias', METRIC_TARGETS.leadTimeTestes),
-        createMetricRow('Cycle Time de Bugs', leadTimeBugs.toFixed(1), ' dias', METRIC_TARGETS.leadTimeBugs),
-        createMetricRow('Cycle Time de Bugs produção', leadTimeBugsProd.toFixed(1), ' dias', METRIC_TARGETS.leadTimeBugsProd)
-    ]);
 }
 
 /**
@@ -517,33 +419,6 @@ function generateSprintHTML(sprintData, cumulativeScenarios = null, previousIds 
     ]));
 
     return fragment;
-}
-
-/**
- * Gera o conteúdo HTML para a seção de bugs não produtivos.
- * @param {object} bugsData - Dados consolidados de bugs do mês.
- * @returns {HTMLTableElement} - O elemento de tabela com os dados de bugs.
- */
-function generateBugsNaoProdutivosHTML(bugsData) {
-    return createTable('Consolidado do Mês', [
-        createMetricRow('Baixa Criticidade', bugsData.baixa, '', METRIC_TARGETS.bugsNaoProdutivos.baixa),
-        createMetricRow('Média Criticidade', bugsData.media, '', METRIC_TARGETS.bugsNaoProdutivos.media),
-        createMetricRow('Alta Criticidade', bugsData.alta, '', METRIC_TARGETS.bugsNaoProdutivos.alta)
-    ]);
-}
-
-
-/**
- * Gera o conteúdo HTML para a seção de bugs produtivos.
- * @param {object} bugsData - Dados consolidados de bugs do mês.
- * @returns {HTMLTableElement} - O elemento de tabela com os dados de bugs.
- */
-function generateBugsProdutivosHTML(bugsData) {
-    return createTable('Consolidado do Mês', [
-        createMetricRow('Baixa Criticidade', bugsData.baixa, '', METRIC_TARGETS.bugsProducao.baixa),
-        createMetricRow('Média Criticidade', bugsData.media, '', METRIC_TARGETS.bugsProducao.media),
-        createMetricRow('Alta Criticidade', bugsData.alta, '', METRIC_TARGETS.bugsProducao.alta)
-    ]);
 }
 
 /**

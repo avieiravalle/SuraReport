@@ -10,8 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
             coverageBranches: [],
             nonProdBugs: [],
             prodBugs: [],
-            leadTimeTests: [],
-            leadTimeBugs: [],
             automationScenarios: [],
             automationTimeSaved: []
         };
@@ -39,14 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.nonProdBugs.push(totalNonProd);
                 data.prodBugs.push(totalProd);
 
-                // Lead Time: Média das duas sprints (ignorando valores 0)
-                const ltTests = [sprint1.leadTimeTestes, sprint2.leadTimeTestes].filter(lt => lt > 0);
-                const avgLtTests = ltTests.length > 0 ? ltTests.reduce((a, b) => a + b, 0) / ltTests.length : 0;
-                const ltBugs = [sprint1.leadTimeBugs, sprint2.leadTimeBugs].filter(lt => lt > 0);
-                const avgLtBugs = ltBugs.length > 0 ? ltBugs.reduce((a, b) => a + b, 0) / ltBugs.length : 0;
-                data.leadTimeTests.push(avgLtTests.toFixed(2));
-                data.leadTimeBugs.push(avgLtBugs.toFixed(2));
-
                 // Automação: Soma dos cenários e do tempo economizado
                 const auto1 = sprint1.testesAutomatizados || {};
                 const auto2 = sprint2.testesAutomatizados || {};
@@ -70,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (coverageChart) coverageChart.destroy();
         if (bugsChart) bugsChart.destroy();
-        if (leadTimeChart) leadTimeChart.destroy();
         if (automationChart) automationChart.destroy();
 
         // Gráfico de Cobertura
@@ -125,31 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }]
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Quantidade de Bugs por Mês' } }, scales: { y: { beginAtZero: true } } }
-        });
-
-        // Gráfico de Lead Time
-        const leadTimeCtx = document.getElementById('leadtime-chart').getContext('2d');
-        leadTimeChart = new Chart(leadTimeCtx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Lead Time de Testes (dias)',
-                    data: data.leadTimeTests,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    fill: false,
-                    tension: 0.1
-                }, {
-                    label: 'Lead Time de Bugs (dias)',
-                    data: data.leadTimeBugs,
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                    fill: false,
-                    tension: 0.1
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Evolução do Lead Time (em dias)' } }, scales: { y: { beginAtZero: true } } }
         });
 
         // Gráfico de Automação

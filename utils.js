@@ -55,74 +55,38 @@ function getSprintAverageCodeCoverage(sprintData) {
  * Retorna o total de bugs não produtivos de uma sprint.
  */
 function getSprintTotalNonProdBugs(sprintData) {
-    if (!sprintData || !sprintData.bugsNaoProdutivos) return 0;
-    const bugs = sprintData.bugsNaoProdutivos;
-    return (bugs.baixa || 0) + (bugs.media || 0) + (bugs.alta || 0);
-}
-
-/**
- * Retorna o objeto de bugs não produtivos, com fallback para a estrutura antiga.
- * @param {object} centerData - Dados do centro para um mês.
- * @returns {{baixa: number, media: number, alta: number}}
- */
-function getNonProductionBugsObject(centerData) {
-    if (!centerData) return { baixa: 0, media: 0, alta: 0 };
-    // Prioriza a nova estrutura mensal.
-    if (centerData.bugsNaoProdutivos) {
-        return centerData.bugsNaoProdutivos;
+    if (!sprintData || !sprintData.bugsNaoProdutivos) {
+        return 0;
     }
-    // Fallback para a estrutura antiga (dados dentro de cada sprint).
-    const s1 = centerData.sprint1?.bugsNaoProdutivos || { baixa: 0, media: 0, alta: 0 };
-    const s2 = centerData.sprint2?.bugsNaoProdutivos || { baixa: 0, media: 0, alta: 0 };
-    return {
-        baixa: (s1.baixa || 0) + (s2.baixa || 0),
-        media: (s1.media || 0) + (s2.media || 0),
-        alta: (s1.alta || 0) + (s2.alta || 0)
-    };
-}
-
-/**
- * Retorna o objeto de bugs de produção, com fallback para soma das sprints se o consolidado não existir.
- */
-function getProductionBugsObject(centerData) {
-    if (centerData.bugsProducao) return centerData.bugsProducao;
-    const s1 = centerData.sprint1?.bugsProducao || { baixa: 0, media: 0, alta: 0 };
-    const s2 = centerData.sprint2?.bugsProducao || { baixa: 0, media: 0, alta: 0 };
-    return {
-        baixa: s1.baixa + s2.baixa,
-        media: s1.media + s2.media,
-        alta: s1.alta + s2.alta
-    };
+    const bugs = sprintData.bugsNaoProdutivos;
+    // Nova estrutura (array de objetos)
+    if (Array.isArray(bugs)) {
+        return bugs.length;
+    }
+    // Estrutura antiga (objeto com contagens)
+    return (bugs.baixa || 0) + (bugs.media || 0) + (bugs.alta || 0);
 }
 
 /**
  * Retorna o total numérico de bugs de produção.
  */
 function getTotalProductionBugs(centerData) {
-    const bugs = getProductionBugsObject(centerData);
-    return (bugs.baixa || 0) + (bugs.media || 0) + (bugs.alta || 0);
-}
-
-/**
- * Retorna o valor de uma métrica mensal, priorizando a nova estrutura de dados
- * e fazendo fallback para o cálculo da média das sprints (estrutura antiga).
- * @param {object} centerData - Dados do centro para um mês.
- * @param {string} metricKey - A chave da métrica (ex: 'passRate', 'leadTimeTestes').
- * @returns {number}
- */
-function getAverageSprintMetric(centerData, metricKey) { // O nome é mantido por retrocompatibilidade de chamadas
     if (!centerData) return 0;
 
-    // Prioriza a nova estrutura mensal (dados no nível do centro)
-    if (centerData[metricKey] !== undefined) {
-        return centerData[metricKey];
-    }
+    const countBugs = (bugs) => {
+        if (!bugs) return 0;
+        // Nova estrutura (array de objetos)
+        if (Array.isArray(bugs)) {
+            return bugs.length;
+        }
+        // Estrutura antiga (objeto com contagens)
+        return (bugs.baixa || 0) + (bugs.media || 0) + (bugs.alta || 0);
+    };
 
-    // Fallback para a estrutura antiga (dados dentro de cada sprint)
-    const s1 = centerData.sprint1?.[metricKey] || 0;
-    const s2 = centerData.sprint2?.[metricKey] || 0;
-    if (s1 > 0 && s2 > 0) return (s1 + s2) / 2;
-    return s1 || s2;
+    const s1_bugs = centerData.sprint1?.bugsProducao;
+    const s2_bugs = centerData.sprint2?.bugsProducao;
+
+    return countBugs(s1_bugs) + countBugs(s2_bugs);
 }
 
 /**

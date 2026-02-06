@@ -31,7 +31,6 @@
         .us-table input[type=number] { -moz-appearance: textfield; appearance: textfield; }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -212,6 +211,24 @@
         .toast.error { background-color: var(--tertiary-color); }
         .toast.info { background-color: var(--primary-color); }
 
+        /* Estilos para Detalhamento de Bugs */
+        .bug-row input, .bug-row select {
+            border: 1px solid transparent;
+            background: transparent;
+            padding: 4px 8px;
+            transition: all 0.2s;
+        }
+        .bug-row input:focus, .bug-row select:focus {
+            border-color: var(--primary-color);
+            background: white;
+            outline: none;
+        }
+        .bug-row:hover { background-color: rgba(0,0,0,0.02); }
+        .bug-crit { font-weight: 600; border-radius: 4px; }
+        .bug-crit.alta { color: #e74c3c; background-color: #fdecea !important; }
+        .bug-crit.media { color: #f39c12; background-color: #fef5e7 !important; }
+        .bug-crit.baixa { color: #2ecc71; background-color: #eafaf1 !important; }
+
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -361,54 +378,32 @@
             // --- Funções Auxiliares de Lógica de Negócios ---
 
             function ensureDataStructure(productData) {
-                // 1. Migração de Bugs de Produção (Sprint -> Mensal)
-                if (!productData.bugsProducao) {
-                    productData.bugsProducao = { baixa: 0, media: 0, alta: 0 };
-                    // Tenta migrar de sprints antigas se existirem
-                    ['sprint1', 'sprint2'].forEach(sp => {
-                        if (productData[sp]?.bugsProducao) {
-                            productData.bugsProducao.baixa += (productData[sp].bugsProducao.baixa || 0);
-                            productData.bugsProducao.media += (productData[sp].bugsProducao.media || 0);
-                            productData.bugsProducao.alta += (productData[sp].bugsProducao.alta || 0);
-                            delete productData[sp].bugsProducao; // Limpa estrutura antiga
-                        }
-                    });
-                }
-
-                // 2. Migração de Bugs Não Produtivos (Sprint -> Mensal)
-                if (!productData.bugsNaoProdutivos) {
-                    productData.bugsNaoProdutivos = { baixa: 0, media: 0, alta: 0 };
-                }
-                ['sprint1', 'sprint2'].forEach(sp => {
-                    if (productData[sp]?.bugsNaoProdutivos) {
-                        productData.bugsNaoProdutivos.baixa += (productData[sp].bugsNaoProdutivos.baixa || 0);
-                        productData.bugsNaoProdutivos.media += (productData[sp].bugsNaoProdutivos.media || 0);
-                        productData.bugsNaoProdutivos.alta += (productData[sp].bugsNaoProdutivos.alta || 0);
-                        delete productData[sp].bugsNaoProdutivos; // Limpa estrutura antiga
-                    }
-                });
-
-                // 3. Migração de Métricas de Tempo (Sprint -> Mensal)
-                const metricsToMigrate = ['leadTimeTestes', 'leadTimeBugs', 'leadTimeBugsProd'];
-                metricsToMigrate.forEach(metric => {
-                    if (typeof productData[metric] === 'undefined' || productData[metric] === 0) {
-                        const s1_val = productData.sprint1?.[metric] || 0;
-                        const s2_val = productData.sprint2?.[metric] || 0;
-                        let avg = 0;
-                        if (s1_val > 0 && s2_val > 0) avg = (s1_val + s2_val) / 2;
-                        else avg = s1_val || s2_val;
-                        
-                        productData[metric] = parseFloat(avg.toFixed(1));
-
-                        if (productData.sprint1) delete productData.sprint1[metric];
-                        if (productData.sprint2) delete productData.sprint2[metric];
-                    }
-                });
-
-
-                // 2. Garantia de Estrutura das Sprints
+                // Garantia de Estrutura das Sprints e Migração de Bugs
                 ['sprint1', 'sprint2'].forEach(sprintKey => {
                     const sprintNum = sprintKey.replace('sprint', '');
+
+                    // Migração da estrutura de bugs: de objeto de contagem para array de objetos
+                    const bugTypes = ['bugsProducao', 'bugsNaoProdutivos'];
+                    bugTypes.forEach(bugType => {
+                        if (productData[sprintKey] && productData[sprintKey][bugType] && !Array.isArray(productData[sprintKey][bugType])) {
+                            const oldBugs = productData[sprintKey][bugType];
+                            const newBugList = [];
+                            const createMigratedBugs = (count, criticidade, typeLabel) => {
+                                for (let i = 0; i < count; i++) {
+                                    newBugList.push({
+                                        id: `MIGRADO-${typeLabel}-${i + 1}`,
+                                        descricao: `Bug ${criticidade.toLowerCase()} migrado automaticamente.`,
+                                        criticidade: criticidade.toLowerCase()
+                                    });
+                                }
+                            };
+                            createMigratedBugs(oldBugs.alta || 0, 'alta', bugType);
+                            createMigratedBugs(oldBugs.media || 0, 'media', bugType);
+                            createMigratedBugs(oldBugs.baixa || 0, 'baixa', bugType);
+                            productData[sprintKey][bugType] = newBugList;
+                        }
+                    });
+
                     if (!productData[sprintKey]) {
                         productData[sprintKey] = getEmptySprint(sprintNum);
                     }
@@ -427,9 +422,44 @@
                     // Inicialização da lista de User Stories (Nova Funcionalidade)
                     if (!productData[sprintKey].listaUserStories) productData[sprintKey].listaUserStories = [];
                     
-                    // Limpeza de legado caso ainda exista
-                    if (productData[sprintKey].bugsProducao) delete productData[sprintKey].bugsProducao;
+                    // Garante que a estrutura de bugs por sprint exista
+                    if (!productData[sprintKey].bugsProducao) productData[sprintKey].bugsProducao = [];
+                    if (!productData[sprintKey].bugsNaoProdutivos) productData[sprintKey].bugsNaoProdutivos = [];
                 });
+
+                // Lógica de migração: se houver dados mensais de bugs (objeto antigo) e os de sprint estiverem vazios, distribui os valores.
+                const distributeBugs = (monthlyBugs, s1Bugs, s2Bugs) => {
+                    if (monthlyBugs && !Array.isArray(monthlyBugs) && s1Bugs.length === 0 && s2Bugs.length === 0) {
+                        const createBugs = (count, crit) => {
+                            for (let i = 0; i < count; i++) {
+                                s1Bugs.push({ id: `MIG-${crit}-${i+1}`, descricao: 'Bug migrado do consolidado', criticidade: crit });
+                            }
+                        };
+                        createBugs(monthlyBugs.baixa || 0, 'baixa');
+                        createBugs(monthlyBugs.media || 0, 'media');
+                        createBugs(monthlyBugs.alta || 0, 'alta');
+                        return s1Bugs.length > 0;
+                    }
+                    return false;
+                };
+
+                let migrationHappened = false;
+                if (productData.bugsProducao && !Array.isArray(productData.bugsProducao)) {
+                    if (distributeBugs(productData.bugsProducao, productData.sprint1.bugsProducao, productData.sprint2.bugsProducao)) {
+                        delete productData.bugsProducao;
+                        migrationHappened = true;
+                    }
+                }
+                if (productData.bugsNaoProdutivos && !Array.isArray(productData.bugsNaoProdutivos)) {
+                    if (distributeBugs(productData.bugsNaoProdutivos, productData.sprint1.bugsNaoProdutivos, productData.sprint2.bugsNaoProdutivos)) {
+                        delete productData.bugsNaoProdutivos;
+                        migrationHappened = true;
+                    }
+                }
+
+                if (migrationHappened) {
+                    showToast('Dados de bugs mensais foram distribuídos para as sprints.', 'info');
+                }
             }
 
             function updateObjectFromInputs(targetObj, container) {
@@ -492,9 +522,6 @@
                 if (productData.bugsNaoProdutivos) {
                     productData.bugsNaoProdutivos = { baixa: 0, media: 0, alta: 0 };
                 }
-                productData.leadTimeTestes = 0;
-                productData.leadTimeBugs = 0;
-                productData.leadTimeBugsProd = 0;
             }
 
             // 2. Gerar campos do formulário e carregar dados (Atualizado para incluir Bugs de Produção Mensal)
@@ -519,71 +546,12 @@
                 htmlBuffer += generateMonthlyDataFormHTML(productData); // Usa a nova função consolidada
 
                 formContainer.innerHTML = htmlBuffer; // Atualiza o DOM uma única vez
-                
-                // Adiciona listeners para cálculo automático de retrabalho
-                const bugInputs = formContainer.querySelectorAll('input[data-field^="bugsProducao"], input[data-field^="bugsNaoProdutivos"]');
-                bugInputs.forEach(input => {
-                    input.addEventListener('input', updateReworkCalculations);
-                });
-                
-                // Cálculo inicial
-                updateReworkCalculations();
-            }
-
-            function updateReworkCalculations() {
-                const sumInputs = (prefix) => {
-                    const inputs = document.querySelectorAll(`input[data-field^="${prefix}"]`);
-                    let sum = 0;
-                    inputs.forEach(inp => sum += (parseFloat(inp.value) || 0));
-                    return sum;
-                };
-
-                const totalProd = sumInputs('bugsProducao');
-                const totalNonProd = sumInputs('bugsNaoProdutivos');
-
-                const displayProd = document.getElementById('calc-rework-prod');
-                const displayNonProd = document.getElementById('calc-rework-non-prod');
-
-                if (displayProd) displayProd.value = totalProd;
-                if (displayNonProd) displayNonProd.value = totalNonProd;
             }
 
             function generateMonthlyDataFormHTML(data) {
                 return `
                     <div class="sprint-form" id="monthly-data-form" style="grid-column: span 2;">
                         <h3>Dados Consolidados do Mês</h3>
-                        <div class="input-group">
-                            <label>Bugs em Produção</label>
-                            <div class="sub-group" style="grid-template-columns: repeat(3, 1fr);">
-                                ${generateInput('productData', 'bugsProducao.baixa', data.bugsProducao.baixa, 'Baixa')}
-                                ${generateInput('productData', 'bugsProducao.media', data.bugsProducao.media, 'Média')}
-                                ${generateInput('productData', 'bugsProducao.alta', data.bugsProducao.alta, 'Alta')}
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label>Bugs Não Produtivos</label>
-                            <div class="sub-group" style="grid-template-columns: repeat(3, 1fr);">
-                                ${generateInput('productData', 'bugsNaoProdutivos.baixa', data.bugsNaoProdutivos.baixa, 'Baixa')}
-                                ${generateInput('productData', 'bugsNaoProdutivos.media', data.bugsNaoProdutivos.media, 'Média')}
-                                ${generateInput('productData', 'bugsNaoProdutivos.alta', data.bugsNaoProdutivos.alta, 'Alta')}
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label>Execuções QA (Médias do Mês)</label>
-                            <div class="sub-group" style="grid-template-columns: repeat(3, 1fr);">
-                                ${generateInput('productData', 'leadTimeTestes', data.leadTimeTestes, 'Cycle Time Testes (dias)')}
-                                ${generateInput('productData', 'leadTimeBugs', data.leadTimeBugs, 'Cycle Time Bugs (dias)')}
-                                ${generateInput('productData', 'leadTimeBugsProd', data.leadTimeBugsProd, 'Cycle Time Bugs Prod (dias)')}
-                            </div>
-                        </div>
-                        
-                        <div class="input-group" style="background-color: #f0f7ff; padding: 10px; border-radius: 4px; border: 1px solid #cce5ff; margin-top: 15px;">
-                            <label style="color: #0033A0;">Volume de Retrabalho (Total de Bugs)</label>
-                            <div class="sub-group" style="grid-template-columns: repeat(2, 1fr);">
-                                <div class="input-group"><label>Total Prod</label><input type="number" id="calc-rework-prod" readonly style="background-color: #e9ecef; font-weight: bold;"></div>
-                                <div class="input-group"><label>Total Não-Prod</label><input type="number" id="calc-rework-non-prod" readonly style="background-color: #e9ecef; font-weight: bold;"></div>
-                            </div>
-                        </div>
                     </div>
                 `;
             }
@@ -620,6 +588,8 @@
                                 ${generateInput(sprintKey, 'testesAutomatizados.tempoAutom', data.testesAutomatizados.tempoAutom, 'Tempo Autom. (min)')}
                             </div>
                         </div>
+                        ${generateBugsSectionHTML(sprintKey, 'bugsProducao', 'Bugs em Produção (Sprint)', data.bugsProducao)}
+                        ${generateBugsSectionHTML(sprintKey, 'bugsNaoProdutivos', 'Bugs Não Produtivos (Sprint)', data.bugsNaoProdutivos)}
                     </div>
                 `;
             }
@@ -668,6 +638,46 @@
                             ${generateInput(sprintKey, 'usSprint', data.usSprint, 'Total US (Calculado)')}
                             ${generateInput(sprintKey, 'casosTestePorUs', data.casosTestePorUs, 'Total CTs (Calculado)')}
                         </div>
+                    </div>
+                `;
+            }
+
+            function generateBugsSectionHTML(sprintKey, bugType, title, bugsData) {
+                let rowsHtml = '';
+                const bugsArray = Array.isArray(bugsData) ? bugsData : [];
+                bugsArray.forEach(bug => {
+                    const crit = bug.criticidade || 'media';
+                    rowsHtml += `
+                        <tr class="bug-row" data-bug-type="${bugType}">
+                            <td style="width: 120px;"><input type="text" class="bug-id" value="${bug.id || ''}" placeholder="ID"></td>
+                            <td><input type="text" class="bug-desc" value="${bug.descricao || ''}" placeholder="Descrição"></td>
+                            <td>
+                                <select class="bug-crit ${crit}" onchange="window.updateBugCritStyle(this)">
+                                    <option value="baixa" ${crit === 'baixa' ? 'selected' : ''}>Baixa</option>
+                                    <option value="media" ${crit === 'media' ? 'selected' : ''}>Média</option>
+                                    <option value="alta" ${crit === 'alta' ? 'selected' : ''}>Alta</option>
+                                </select>
+                            </td>
+                            <td style="text-align: center;"><button type="button" class="btn-icon" style="color: #e74c3c;" onclick="window.removeBugRow(this)" title="Remover">🗑️</button></td>
+                        </tr>
+                    `;
+                });
+
+                return `
+                    <div class="input-group" style="background: #fff5f5; padding: 10px; border-radius: 4px; border: 1px solid #ffe0e0; margin-top: 15px;">
+                        <label>${title}</label>
+                        <table class="us-table" id="table-${sprintKey}-${bugType}">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Descrição</th>
+                                    <th style="width: 100px;">Criticidade</th>
+                                    <th style="width: 50px;">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bug-list-body">${rowsHtml}</tbody>
+                        </table>
+                        <button type="button" onclick="window.addBugRow('${sprintKey}', '${bugType}')" style="padding: 5px 10px; font-size: 12px; background-color: var(--tertiary-color);">+ Adicionar Bug</button>
                     </div>
                 `;
             }
@@ -733,6 +743,22 @@
                         });
                     });
                     productData[sprintKey].listaUserStories = listaUserStories;
+
+                    // Salvar Lista de Bugs
+                    const bugTypes = ['bugsProducao', 'bugsNaoProdutivos'];
+                    bugTypes.forEach(bugType => {
+                        const bugRows = document.querySelectorAll(`#table-${sprintKey}-${bugType} .bug-row`);
+                        const listaBugs = [];
+                        bugRows.forEach(row => {
+                            listaBugs.push({
+                                id: row.querySelector('.bug-id').value,
+                                descricao: row.querySelector('.bug-desc').value,
+                                criticidade: row.querySelector('.bug-crit').value
+                            });
+                        });
+                        productData[sprintKey][bugType] = listaBugs;
+                    });
+
                 });
 
                 // Salvar Dados Mensais (Custo QA e Bugs Prod)
@@ -987,7 +1013,9 @@
                     usSprint: 0,
                     casosTestePorUs: 0,
                     testesAutomatizados: { cenarios: 0, execucoes: 0, tempoManual: 0, tempoAutom: 0 },
-                    listaUserStories: []
+                    listaUserStories: [],
+                    bugsProducao: [],
+                    bugsNaoProdutivos: []
                 };
             }
 
@@ -1008,6 +1036,7 @@
             saveBtn.addEventListener('click', saveData);
             downloadBtn.addEventListener('click', handleDownload);
             clearBtn.addEventListener('click', clearForm);
+
             archiveBtn.addEventListener('click', openArchiveModal);
             archiveConfirmBtn.addEventListener('click', performArchive);
             archiveCancelBtn.addEventListener('click', () => archiveModal.style.display = 'none');
@@ -1076,6 +1105,37 @@
         window.removeUsRow = function(btn, sprintKey) {
             btn.closest('tr').remove();
             window.updateUsTotals(sprintKey);
+        };
+
+        // Função para incluir uma nova linha de bug na tabela
+        window.addBugRow = function(sprintKey, bugType) {
+            const tbody = document.querySelector(`#table-${sprintKey}-${bugType} .bug-list-body`);
+            const tr = document.createElement('tr');
+            tr.className = 'bug-row';
+            tr.dataset.bugType = bugType;
+            tr.innerHTML = `
+                <td style="width: 120px;"><input type="text" class="bug-id" placeholder="ID"></td>
+                <td><input type="text" class="bug-desc" placeholder="Descrição"></td>
+                <td>
+                    <select class="bug-crit media" onchange="window.updateBugCritStyle(this)">
+                        <option value="baixa">Baixa</option>
+                        <option value="media" selected>Média</option>
+                        <option value="alta">Alta</option>
+                    </select>
+                </td>
+                <td style="text-align: center;"><button type="button" class="btn-icon" style="color: #e74c3c;" onclick="window.removeBugRow(this)" title="Remover">🗑️</button></td>
+            `;
+            tbody.appendChild(tr);
+        };
+
+        // Função para excluir uma linha de bug da tabela
+        window.removeBugRow = function(btn) {
+            btn.closest('tr').remove();
+        };
+
+        window.updateBugCritStyle = function(select) {
+            select.classList.remove('baixa', 'media', 'alta');
+            select.classList.add(select.value);
         };
 
         window.updateUsTotals = function(sprintKey) {

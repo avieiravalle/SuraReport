@@ -42,8 +42,7 @@ describe('Automação de Preenchimento Completo por Center', () => {
             },
             mensal: {
                 'bugsProducao-baixa': 0, 'bugsProducao-media': 1, 'bugsProducao-alta': 0,
-                'bugsNaoProdutivos-baixa': 8, 'bugsNaoProdutivos-media': 3, 'bugsNaoProdutivos-alta': 1,
-                'leadTimeTestes': 2.3, 'leadTimeBugs': 3.8, 'leadTimeBugsProd': 0.4
+                'bugsNaoProdutivos-baixa': 8, 'bugsNaoProdutivos-media': 3, 'bugsNaoProdutivos-alta': 1
             }
         },
 
@@ -66,8 +65,7 @@ describe('Automação de Preenchimento Completo por Center', () => {
             },
             mensal: {
                 'bugsProducao-baixa': 1, 'bugsProducao-media': 2, 'bugsProducao-alta': 1,
-                'bugsNaoProdutivos-baixa': 14, 'bugsNaoProdutivos-media': 6, 'bugsNaoProdutivos-alta': 2,
-                'leadTimeTestes': 2.9, 'leadTimeBugs': 4.8
+                'bugsNaoProdutivos-baixa': 14, 'bugsNaoProdutivos-media': 6, 'bugsNaoProdutivos-alta': 2
             }
         },
 
@@ -90,8 +88,7 @@ describe('Automação de Preenchimento Completo por Center', () => {
             },
             mensal: {
                 'bugsProducao-baixa': 0, 'bugsProducao-media': 0, 'bugsProducao-alta': 0,
-                'bugsNaoProdutivos-baixa': 3, 'bugsNaoProdutivos-media': 0, 'bugsNaoProdutivos-alta': 0,
-                'leadTimeTestes': 1.5, 'leadTimeBugs': 2.0
+                'bugsNaoProdutivos-baixa': 3, 'bugsNaoProdutivos-media': 0, 'bugsNaoProdutivos-alta': 0
             }
         },
 
@@ -114,8 +111,7 @@ describe('Automação de Preenchimento Completo por Center', () => {
             },
             mensal: {
                 'bugsProducao-baixa': 1, 'bugsProducao-media': 0, 'bugsProducao-alta': 0,
-                'bugsNaoProdutivos-baixa': 11, 'bugsNaoProdutivos-media': 4, 'bugsNaoProdutivos-alta': 1,
-                'leadTimeTestes': 2.7, 'leadTimeBugs': 4.5
+                'bugsNaoProdutivos-baixa': 11, 'bugsNaoProdutivos-media': 4, 'bugsNaoProdutivos-alta': 1
             }
         },
 
@@ -140,8 +136,7 @@ describe('Automação de Preenchimento Completo por Center', () => {
             },
             mensal: {
                 'bugsProducao-baixa': 3, 'bugsProducao-media': 1, 'bugsProducao-alta': 0,
-                'bugsNaoProdutivos-baixa': 18, 'bugsNaoProdutivos-media': 8, 'bugsNaoProdutivos-alta': 3,
-                'leadTimeTestes': 3.4, 'leadTimeBugs': 5.3, 'leadTimeBugsProd': 1.8
+                'bugsNaoProdutivos-baixa': 18, 'bugsNaoProdutivos-media': 8, 'bugsNaoProdutivos-alta': 3
             }
         }
 

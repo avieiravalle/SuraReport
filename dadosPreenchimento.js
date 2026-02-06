@@ -122,10 +122,7 @@ const dadosRelatorio = {
         "baixa": 8,
         "media": 0,
         "alta": 0
-      },
-      "leadTimeTestes": 4,
-      "leadTimeBugs": 0,
-      "leadTimeBugsProd": 0
+      }
     },
     "Claims": {
       "sprint1": {
@@ -256,10 +253,7 @@ const dadosRelatorio = {
         "baixa": 2,
         "media": 0,
         "alta": 0
-      },
-      "leadTimeTestes": 1,
-      "leadTimeBugs": 2,
-      "leadTimeBugsProd": 0
+      }
     },
     "Billing": {
       "sprint1": {
@@ -397,10 +391,7 @@ const dadosRelatorio = {
         "baixa": 4,
         "media": 0,
         "alta": 0
-      },
-      "leadTimeTestes": 2,
-      "leadTimeBugs": 5,
-      "leadTimeBugsProd": 0
+      }
     },
     "Portal": {
       "sprint1": {
@@ -517,10 +508,7 @@ const dadosRelatorio = {
         "baixa": 6,
         "media": 8,
         "alta": 0
-      },
-      "leadTimeTestes": 1,
-      "leadTimeBugs": 6,
-      "leadTimeBugsProd": 32
+      }
     },
     "Integracoes": {
       "sprint1": {
@@ -658,10 +646,7 @@ const dadosRelatorio = {
         "baixa": 1,
         "media": 2,
         "alta": 0
-      },
-      "leadTimeTestes": 4,
-      "leadTimeBugs": 0,
-      "leadTimeBugsProd": 4
+      }
     }
   },
   "2025-12": {
@@ -801,10 +786,7 @@ const dadosRelatorio = {
         "baixa": 3,
         "media": 0,
         "alta": 0
-      },
-      "leadTimeTestes": 3.5,
-      "leadTimeBugs": 1,
-      "leadTimeBugsProd": 0
+      }
     },
     "Claims": {
       "sprint1": {
@@ -928,10 +910,7 @@ const dadosRelatorio = {
         "baixa": 1,
         "media": 2,
         "alta": 0
-      },
-      "leadTimeTestes": 2,
-      "leadTimeBugs": 4,
-      "leadTimeBugsProd": 0
+      }
     },
     "Billing": {
       "sprint1": {
@@ -1062,10 +1041,7 @@ const dadosRelatorio = {
         "baixa": 2,
         "media": 1,
         "alta": 0
-      },
-      "leadTimeTestes": 2,
-      "leadTimeBugs": 4,
-      "leadTimeBugsProd": 14
+      }
     },
     "Portal": {
       "sprint1": {
@@ -1175,10 +1151,7 @@ const dadosRelatorio = {
         "baixa": 4,
         "media": 5,
         "alta": 0
-      },
-      "leadTimeTestes": 1,
-      "leadTimeBugs": 6,
-      "leadTimeBugsProd": 32
+      }
     },
     "Integracoes": {
       "sprint1": {
@@ -1316,10 +1289,7 @@ const dadosRelatorio = {
         "baixa": 0,
         "media": 0,
         "alta": 0
-      },
-      "leadTimeTestes": 0,
-      "leadTimeBugs": 2,
-      "leadTimeBugsProd": 0
+      }
     }
   },
   "metas": {
@@ -1333,9 +1303,6 @@ const dadosRelatorio = {
     "passRate": 90,
     "densidadeTestes": 4,
     "coberturaTestesPercentual": 100,
-    "leadTimeTestes": 1,
-    "leadTimeBugs": 2,
-    "leadTimeBugsProd": 2,
     "bugsNaoProdutivos": {
       "baixa": 5,
       "media": 3,
@@ -1478,10 +1445,7 @@ const dadosRelatorio = {
         "media": 0,
         "alta": 0
       },
-      "leadTimeTestes": 3,
-      "leadTimeBugs": 0,
-      "leadTimeBugsProd": 0,
-      "planoDeAcao": ""
+      "planoDeAcao": "Testes unitário -> Meta de nos próximos 3 a 6 meses conseguir chegar a media de 60%\nPass rated -> Manter\nBugs -> Solucionar os bugs de produção\nAutomação -> Temos planejamento em andamento.\nDensidade -> Manter"
     },
     "Claims": {
       "sprint1": {
@@ -1613,10 +1577,7 @@ const dadosRelatorio = {
         "media": 0,
         "alta": 0
       },
-      "leadTimeTestes": 3,
-      "leadTimeBugs": 6,
-      "leadTimeBugsProd": 0,
-      "planoDeAcao": ""
+      "planoDeAcao": "Testes unitário -> Meta de nos próximos 3 a 6 meses conseguir chegar a media de 60%\nPass rated -> manter acima de 90%\nBugs -> Solucionar os bugs de produção\nAutomação -> Em andamento.\nDensidade -> Manter"
     },
     "Billing": {
       "sprint1": {
@@ -1712,10 +1673,7 @@ const dadosRelatorio = {
         "media": 0,
         "alta": 0
       },
-      "leadTimeTestes": 13,
-      "leadTimeBugs": 3,
-      "leadTimeBugsProd": 14,
-      "planoDeAcao": ""
+      "planoDeAcao": "Testes unitário -> Meta de nos próximos 3 a 6 meses conseguir chegar a media de 60%\nPass rated -> Buscar entender e melhorar a entrega das US\nBugs -> Solucionar os bugs de produção\nAutomação -> Temos planejamento em andamento.\nDensidade -> Procurar aumentar os números de casos de testes min 4 por US.  "
     },
     "Portal": {
       "sprint1": {
@@ -1840,10 +1798,7 @@ const dadosRelatorio = {
         "media": 4,
         "alta": 0
       },
-      "leadTimeTestes": 12,
-      "leadTimeBugs": 4,
-      "leadTimeBugsProd": 11,
-      "planoDeAcao": ""
+      "planoDeAcao": "Testes unitário -> Meta de nos próximos 6 a 12 meses conseguir chegar a media de 60%\nPass rated -> Manter acima de 90%\nBugs -> Solucionar os bugs de produção\nAutomação ->  Em andamento.\nDensidade -> Procurar aumentar os numeros de casos de testes min 4 por US.  "
     },
     "Integracoes": {
       "sprint1": {
@@ -1961,10 +1916,7 @@ const dadosRelatorio = {
         "media": 4,
         "alta": 1
       },
-      "leadTimeTestes": 5,
-      "leadTimeBugs": 0,
-      "leadTimeBugsProd": 17,
-      "planoDeAcao": ""
+      "planoDeAcao": "Testes unitário -> Meta de nos próximos 6 a 12 meses conseguir chegar a media de 60%\nPass rated -> Manter\nBugs -> Solucionar os bugs de produção\nAutomação -> Temos planejamento em andamento.\nDensidade -> Procurar aumentar os números de casos de testes min 4 por US.  "
     }
   }
 };

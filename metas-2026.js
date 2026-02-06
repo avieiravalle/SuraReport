@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 coberturaCodigo: 50,
                 passRate: 95,
                 coberturaTestes: 100,
-                leadTimeTestes: 2.5,
-                leadTimeBugs: 2.0,
                 bugsProducao: 2,
                 bugsNaoProd: 10,
                 automacao: 5
@@ -39,8 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { key: 'coberturaCodigo', label: 'Cob. Código (%)' },
         { key: 'passRate', label: 'Pass Rate (%)' },
         { key: 'coberturaTestes', label: 'Cob. Testes (%)' },
-        { key: 'leadTimeTestes', label: 'Lead Time Testes' },
-        { key: 'leadTimeBugs', label: 'Lead Time Bugs' },
         { key: 'bugsProducao', label: 'Bugs Prod (Max)' },
         { key: 'bugsNaoProd', label: 'Bugs Não-Prod' },
         { key: 'automacao', label: 'Automação (Novos)' }
